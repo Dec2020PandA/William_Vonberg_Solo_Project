@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'log-reg.css'%}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="{% static 'scripts.js'%}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="navbar-login">
+        <img id='logo-main' src="../static/images/PackTrack_Logo.png" alt="logo-main">
+
+        <div id="packtrack-menu">
+            <ul class="navbar-nav">
+                <li><a href="/">Back to Home</a></li>
+                <li><a href="/reg_page">Switch to Register</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="benefits-background">
+        <div id="log-reg">
+            <h1>Login</h1>
+            <form id="log-form" action="/login_user" method="POST">
+            {%csrf_token%}
+                Email: <input type="email" name="email"><br>
+                Password: <input type="password" name="p_w"><br>
+                <input id='log-btn' type="submit" value="Log In">
+            </form>
+            <p>Not a member yet? <a href="/reg_page">Register Here!</a></p>
+        </div>
+        <div id="errors">
+            {%if messages%}
+            <ul>
+                {%for error in messages%}
+                <li>{{error}}</li>
+                {%endfor%}
+            </ul>
+            {%endif%}
+        </div>
+    </div>
+</body>
+
+</html>

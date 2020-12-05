@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login / Register</title>
+        {%load static%}
+        <link rel="stylesheet" href="{%static 'log-reg.css'%}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <script src="{% static 'scripts.js'%}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="navbar-login">
+        <img id='logo-main' src="../static/images/PackTrack_Logo.png" alt="logo-main">
+
+        <div id="packtrack-menu">
+            <ul class="navbar-nav">
+                <li><a href="/">Back to Home</a></li>
+                <li><a href="/log_page">Switch to Login</a></li>
+            </ul>     
+        </div>
+    </div>
+    <div class="benefits-background">
+        <div id="reg-log">
+            <h1>Register</h1>
+            <form action="/create_user" id="reg-form" method="post">
+            {%csrf_token%}
+                <div id="inputs">
+                    First Name: <input type="text" name="f_n"><br>
+                    Last Name: <input type="text" name="l_n"><br>
+                    Birthday: <input type="date" name="b_d" value="1991-06-06">
+                </div>
+                <div id="inputs">    
+                    Email: <input type="email" name="email"><br>
+                    Password: <input type="password" name="pw"><br>
+                    Confirm Pswd: <input type="password" name="conf_pw"><br>
+                </div>    
+                    <input id='reg-btn' type="submit" value="Register!">
+            </form>
+            <p>Already a member? <a href="/log_page">Log in here!</a></p>
+        </div>
+        <div id="errors">
+            {%if messages%}
+            <ul>
+                {%for error in messages%}
+                <li>{{error}}</li>
+                {%endfor%}
+            </ul>
+            {%endif%}
+        </div>
+    </div>
+</body>
+
+</html>

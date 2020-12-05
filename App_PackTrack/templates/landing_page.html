@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack Track</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'pack_style.css'%}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="{% static 'scripts.js'%}"></script>
+</head>
+
+<body>
+    <!-- Navigation bar - top -->
+    <div class="navbar-main">
+        <img id='logo-main' src="../static/images/PackTrack_Logo.png" alt="logo-main">
+
+        <div id="packtrack-menu">
+            <ul class="navbar-nav">
+                <li><a href="#top">Home</a></li>
+                <li><a href="#info-section">The Track</a></li>
+                <li><a href="#about-us">The Pack</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <form id='login' action="/login" method="post">
+                {%csrf_token%}
+                <input id='login-btn' type="submit" value="Log In">
+            </form>
+            <form id='register' action="/register" method="post">
+                {%csrf_token%}
+                <input id='register-btn' type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+
+    <div class="content">
+        <p id='join-text'>Join the Pack</p>
+        <!-- Main benefits section -->
+        <div class="benefits-background">
+            <div class="benefit1 cap-left">
+                <video autoplay muted loop id='ben1-vid'>
+                    <source src="../static/images/human_back.mp4" type="video/mp4">
+                </video>
+                <figcaption id='ben1'>
+                    <h1>For the Humans</h1><br>
+                    No matter your body type or your activeness, Pack Track is right for you!<br><br>
+                    It provides an easy way to achieving your fitness goals.<br><br>
+                    Recording daily intakes and activities easier than ever. <br><br>
+                    Our summary page gives you all the info you need in a one stop view.
+                </figcaption>
+            </div>
+
+            <div class="benefit2 cap-left">
+                <video autoplay muted loop id='ben2-vid'>
+                    <source src="../static/images/Dogs_back.mp4" type="video/mp4">
+                </video>
+                <figcaption id='ben2'>
+                    <h1>For the Pups</h1><br>
+                    Dogs love to be with you, run with you, and help you to acieve your goals<br><br>
+                    Our Pack Track lets you help them stay in shape too!<br><br>
+                    Big or small, active or not - Keep track of their health too.<br><br>
+                    Keep you running partner healthy along with you and they'll have fun doing it! <br>
+                </figcaption>
+            </div>
+
+            <div class="benefit3 cap-left">
+                <video autoplay muted loop id='ben3-vid'>
+                    <source src="../static/images/both_back.mp4" type="video/mp4">
+                </video>
+                <figcaption id='ben3'>
+                    <h1>For the Pack</h1><br>
+                    When you set out on your daily activities, keep records for both of you.<br><br>
+                    The Pack Tracker summary shows you not only your stats, but your partners too!<br><br>
+                    Why over complicate it! Our tracker lets you track the bare necessities so that you can spend more
+                    time doing the things you want.<br><br>
+                    Are you ready to start getting healthy? Well, bring your pet and lets get going! <br>
+
+                </figcaption>
+            </div>
+        </div>
+        <div id="info-section">
+            <!-- About the Product -->
+            <div id="about-packtrack">
+                <div id="what-is">
+                    <h1>What is Pack Track?</h1>
+                    <img id='packtrack-what' src="../static/images/vizsla-bkgnd.jpg" alt="vizsla-what">
+                    <p id="what">
+                        Pack Track is an easy and effective way to track not only your basic macros and activities, but
+                        to track your best friends as well! Now you can stay on top of your fitness goals while helping
+                        your buddy stay in shape too.
+                    </p>
+                </div>
+
+                <div id="how-does">
+                    <h1>How does it work?</h1>
+                    <img id='packtrack-how' src="../static/images/ben-bk2.jpg" alt="runners-how">
+                    <p id="how">
+                        It's easy! All you have to do is record your macros after you consume them and enter in your
+                        activity and calories burned after you do them, we calculate the rest. We then provide you a
+                        summary based on your goals.
+                    </p>
+                </div>
+
+                <div id="the-cost">
+                    <h1>How much does it cost?</h1>
+                    <img id='packtrack-cost' src="../static/images/ben-bkgnd.jpg" alt="pt-cost">
+                    <p id="cost">
+                        Nothing! This is a free to use app that you can utilize to help you in your fitness and macro
+                        tracking. No subscription needed at this time! How's that for easy!
+                    </p>
+                </div>
+            </div>
+
+            <div id="pictures">
+                <h1>Success Stories</h1><br><br>
+                <div class="slideshow-container">
+                    <div class="mySlides fade">
+                        <div class="numbertext">1 / 6</div>
+                        <img class="slides" src="../static/images/Tesla1.jpg" style="width:100%">
+                        <div class="text">Tesla</div>
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">2 / 6</div>
+                        <img class="slides" src="../static/images/Piper1.jpg" style="width:100%">
+                        <div class="text">Piper</div>
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 6</div>
+                        <img class="slides" src="../static/images/Ruby1.jpg" style="width:100%">
+                        <div class="text">Ruby</div>
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">4 / 6</div>
+                        <img class="slides" src="../static/images/The_Nose.jpg" style="width:100%">
+                        <div class="text">The Nose Knows</div>
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">5 / 6</div>
+                        <img class="slides" src="../static/images/tesla-mom.jpg" style="width:100%">
+                        <div class="text">Tesla and Mom</div>
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">6 / 6</div>
+                        <img class="slides" src="../static/images/ruby-park.jpg" style="width:100%">
+                        <div class="text">Ruby</div>
+                    </div>
+                </div>
+                <br>
+                <script>
+                    var slideIndex = 0;
+                    showSlides();
+
+                    function showSlides() {
+                        var i;
+                        var slides = document.getElementsByClassName("mySlides");
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        slideIndex++;
+                        if (slideIndex > slides.length) {
+                            slideIndex = 1
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        setTimeout(showSlides, 4000); // Change image every 2 seconds
+                    }
+                </script>
+            </div>
+        </div>
+        <!-- About us -->
+
+        <div id="about-us">
+
+            <div id="about-humans">
+                <h1>About Us</h1>
+                <div id="owner">
+                    <img id="owner-headshot" src="../static/images/BV2.jpg" alt="owner-picture">
+                    <p id="owner-bio">Spending a majority of his career in customer service, telecommunications, and
+                        military servcie, he decided to switch into software development. One thing he struggled with
+                        was finding apps that could track both his data and his best friends, Ruby. After becoming a
+                        full stack developer, He designed this program and shared it with the world. His innovative
+                        designs are only just beginning.</p>
+                </div>
+                <div id="co-op">
+                    <p id="co-op-bio">Iris's constant commitment and fresh ideals helped to shape not only the layout
+                        "feel" of the app, but also some of the features included with in. Without the support and
+                        patience, coupled with innovative and dynamic thinking, This would not have been possible to
+                        release. </p>
+                    <img id="co-op-headshot" src="../static/images/IrisV2.png" alt="co-op-picture">
+                </div>
+            </div>
+            <div id="about-dogs">
+                <h1>About our Pups</h1>
+                <div id="ruby">
+                    <img id="ruby-pic" src="../static/images/The_Boop.png" alt="Ruby-pic">
+                    <p id="ruby-bio">Ruby is always by Bill's side, and with him whenever he gets a chance to get and
+                        out exercise. Having the ability to track both of their macros and exercise was the idea that
+                        created this app. Ruby is a National Champion Silver Flyball dog, and even at 6 and a half, she
+                        still runs a 5.5 second run!</p>
+                </div>
+                <div id="tesla">
+                    <p id="tesla-bio">Tesla is 100% a momma's dog. Her guardian, her companion, and her exercise buddy.
+                        with him being almost 7, we wanted a way to make sure he has the healthiest life possible. Tesla
+                        is also a Flyball dog and is almost a National Champion! </p>
+                    <img id="tesla-pic" src="../static/images/Tesla-park.png" alt="tesla-pic">
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Us -->
+        <div id="contact">
+            <h1>Contact Us</h1>
+            <p id="contact-info-container">We always love to hear from our guests and our clients! We value your input
+                and your feedback. If you want to let us know about something you'd like to see, or just want to tell us
+                how much you liked what you saw, Feel free to contact us! We hope that you loved what you saw as much as
+                we did designing it for you!</p>
+            <form id="comment-form" method="GET">
+                <label for="name">Name</label><br>
+                <input type="text" id="name" name="Name" placeholder="Your Name"><br><br>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" placeholder="Email address"><br><br>
+                <label for="comment">Comment</label><br>
+                <textarea name="comment" id="comment" cols="50" rows="10">Comments</textarea><br><br>
+                <input id="comment-btn" type="submit" value="Submit">
+            </form>
+            <img id="packtrack-img" src="../static/images/packtrack.png" alt="logo-image">
+        </div>
+    </div>
+</body>
+
+</html>
