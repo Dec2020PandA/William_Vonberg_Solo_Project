@@ -145,7 +145,7 @@
     display: inline-block;
 }
 
-#log-btn,#reg-btn {
+.btn {
     background-color: green;
     color: ivory;
     font-family: 'Segoe UI';
@@ -158,9 +158,7 @@
     padding: .3em 1.0em;
 }
 
-#comment-btn:hover,
-#log-btn:hover,
-#reg-btn:hover {
+.btn:hover{
     background-color: #784321;
     color: ivory;
 }

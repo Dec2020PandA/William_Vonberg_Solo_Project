@@ -18,13 +18,13 @@
 
         <div id="packtrack-menu">
             <ul class="navbar-nav">
-                <li><a href="">Profile</a></li>
-                <li><a href="">Diary</a></li>
-                <li><a href="">Support</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/summary">Summary</a></li>
+                <li><a href="/support">Support</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
             <div id="spacer">
-
+                <p><a id="user_active" href="/profile">{{request.session.user_name}}</a></p>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <span id="BM-data">
                 <h2>{{bmi}}</h2>
                 <h2>{{bmr}}</h2>
-                <h2>1530</h2>
+                <h2>{{cal}}</h2>
             </span>
         </div>
         <div class="profile-update">
@@ -86,35 +86,50 @@
                         <input type="number" name="height" value="{{data.height}}">
                     </div>
                     <div class="input gender">
-                        <label for="gender">Sex:</label>
+                        <label for="gender">Biological Sex:</label>
                         <select name="gender">
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
+                            <option value="M"{% if data.gender == "M"%} selected {%endif%}>Male</option>
+                            <option value="F" {% if data.gender == "F"%} selected {%endif%}>Female</option>
                         </select>
                     </div>
                     <div class="input activity">
                         <label for="activity_lvl">Activity Level: </label>
-                        <input id="number" type="number" name="activity_lvl" min="0" max="3"
-                            value="{{data.activity_lvl}}">
+                        <select name="activity_lvl">
+                            <option value="1.2" {% if data.activity_lvl == "1.2"%} selected {%endif%}>Sedentary</option>
+                            <option value="1.375"{% if data.activity_lvl == "1.375"%} selected {%endif%}>Lightly Active</option>
+                            <option value="1.55"{% if data.activity_lvl == "1.55"%} selected {%endif%}>Moderately Active</option>
+                            <option value="1.725"{% if data.activity_lvl == "1.725"%} selected {%endif%}>Very Active</option>
+                            <option value="1.9"{% if data.activity_lvl == "1.9"%} selected {%endif%}>Extra Active</option>
+                        </select>
                     </div>
                     <div class="input">
                         <label for="goal">Goal Weight: </label>
                         <input type="number" name="goal" value="{{data.goal}}">
                     </div>
+                    <div class="input rate">
+                        <label for="rate">Goal Rate: </label>
+                        <select name="rate">
+                            <option value="1000"{% if data.rate == "1000"%} selected {%endif%}>Gain 2 lb/week</option>
+                            <option value="500"{% if data.rate == "500"%} selected {%endif%}>Gain 1 lb/week</option>
+                            <option value="0" {% if data.rate == "0"%} selected {%endif%}>Maintain weight</option>
+                            <option value="-500" {% if data.rate == "-500"%} selected {%endif%}>Lose 1 lb/week</option>
+                            <option value="-1000" {% if data.rate == "-1000"%} selected {%endif%}>Lose 2 lb/week</option>
+                        </select>
+                    </div>
                     <div class="input percent">
                         <label for="carb_percent">Carbs</label>
-                        <input id="perc" type="number" name="carb_percent" value="{{data.carb_percent}}">
+                        <input class="perc" type="number" name="carb_percent" value="{{data.carb_percent}}">
                     </div>
                     <div class="input percent">
                         <label for="fat_percent">Fat</label>
-                        <input id="perc" type="number" name="fat_percent" value="{{data.fat_percent}}">
+                        <input class="perc" type="number" name="fat_percent" value="{{data.fat_percent}}">
                     </div>
                     <div class="input percent">
                         <label for="protein_percent">Protein</label>
-                        <input id="perc" type="number" name="protein_percent" value="{{data.protein_percent}}">
+                        <input class="perc" type="number" name="protein_percent" value="{{data.protein_percent}}">
                     </div>
                 </div>
-                <input id="submit-btn" type="submit" value="Submit Changes">
+                <input class="btn" id="submit-btn" type="submit" value="Submit Changes">
             </form>
         </div>
         {%if messages%}

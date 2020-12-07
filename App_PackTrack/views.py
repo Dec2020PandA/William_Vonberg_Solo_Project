@@ -24,6 +24,10 @@ def log_page(request):
 def reg_page(request):
     return render(request, 'reg_log.html')
 
+def support(request):
+    if "user_id" not in request.session:
+        return redirect('/')
+    return render(request,"support.html")
 
 def summary(request):
     if "user_id" not in request.session:
@@ -47,7 +51,7 @@ def profile(request):
         'data': Body.objects.get(user=request.session['user_id']),
         'bmi': BMIcalc(user_data.current_weight,user_data.height),
         'bmr': BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),
-
+        'cal': CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate),
     }
     return render(request, "profile.html", context)
 
@@ -117,7 +121,7 @@ def create_user(request):
             password=hash_pw
         )
         request.session['user_id'] = new_user.id
-        request.session['user_name'] = f"{new_user.first_name}"
+        request.session['user_name'] = f"{new_user.first_name} {new_user.last_name}"
         dateA = parse_date(str(request.POST['b_d']))
         dateB = date.today()
         difference_years = relativedelta(dateB, dateA).years
@@ -137,7 +141,6 @@ def create_user(request):
     return redirect('/reg_page')
 
 # edit profile
-
 
 def user_update(request):
     if request.method == "POST":
@@ -169,6 +172,9 @@ def user_update(request):
         if body_data.current_weight != request.POST['current_weight']:
             body_data.current_weight = request.POST['current_weight']
             body_data.save()
+        if body_data.rate != request.POST['rate']:
+            body_data.rate = request.POST['rate']
+            body_data.save()
         if body_data.height != request.POST['height']:
             body_data.height = request.POST['height']
             body_data.save()
@@ -190,8 +196,26 @@ def user_update(request):
         if body_data.protein_percent != request.POST['protein_percent']:
             body_data.protein_percent = request.POST['protein_percent']
             body_data.save()
+        request.session['user_id'] = edit_user.id
+        request.session['user_name'] = f"{edit_user.first_name} {edit_user.last_name}"
         return redirect("/profile")
     return redirect("/profile")
+
+
+#process bug reports
+
+def process_issue(request):
+    if request.method=="POST":
+        new_report=Bug.objects.create(
+            user=User.objects.get(id=request.session['user_id']),
+            issue_location=request.POST['issue_location'],
+            issue_date=request.POST['issue_date'],
+            issue_comp=request.POST['issue_comp'],
+            issue_desc=request.POST['issue_description'],
+            issue_status=request.POST['issue_status']
+        )
+        return redirect("/support")
+    return redirect("/support")
 
 def logout(request):
     request.session.flush()

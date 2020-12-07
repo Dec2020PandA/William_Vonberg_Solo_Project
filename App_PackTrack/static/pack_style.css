@@ -19,8 +19,8 @@ h1 {
 .navbar-main {
     background-image: linear-gradient(black, rgb(41, 41, 41), black);
     overflow: hidden;
+    padding-top: .5em;
     position: fixed;
-    top: 0;
     width: 100%;
     z-index: 3;
 }
@@ -28,7 +28,7 @@ h1 {
 .navbar-nav {
     display: inline-block;
     font-family: 'Segoe UI';
-    vertical-align: middle;
+    vertical-align: top;
     list-style-type: none;
 }
 
@@ -54,9 +54,29 @@ h1 {
     color: #784321;
 }
 
+#spacer {
+    margin: 0 2em;
+    vertical-align: bottom;
+}
+
+#user_active {
+    color: rgb(180, 180, 180);
+    font-family: 'Segoe UI';
+    text-decoration: none;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+#user_active:hover {
+    color: rgb(110, 194, 121);
+}
+
 #packtrack-menu {
     float: right;
-    margin-right: 4em;
+    margin-top: .4em;
 }
 
 #logo-main {
@@ -71,13 +91,15 @@ h1 {
     z-index: 1;
     font-family: 'Rock Salt', cursive;
     color: white;
+    text-shadow: 1px 1px 4px white;
     font-size: 72px;
+    opacity: .65;
     width: auto;
     height: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateX(38%) translateY(-38%);
+    transform: translateX(-4%) translateY(-34%) rotate(30deg);
 }
 
 .benefits-background {
@@ -324,10 +346,7 @@ h1 {
     display: inline-block;
 }
 
-#login-btn,
-#register-btn,
-#comment-btn,
-#submit-btn {
+.btn{
     background-color: green;
     color: ivory;
     font-family: 'Segoe UI';
@@ -340,10 +359,7 @@ h1 {
     padding: .3em 1.5em;
 }
 
-#login-btn:hover,
-#register-btn:hover,
-#comment-btn:hover,
-#submit-btn:hover {
+.btn:hover{
     background-color: #784321;
     color: ivory;
 }
@@ -659,7 +675,7 @@ textarea,
 }
 
 #profile-body {
-    background-image: repeating-linear-gradient(to bottom right, rgb(31, 31, 31), rgb(0, 0, 0) 1%);
+    background-image: repeating-linear-gradient(to bottom right, rgb(15, 15, 15), rgb(0, 0, 0) 1%);
 }
 
 #spacer {
@@ -669,7 +685,7 @@ textarea,
 
 #profile-data {
     display: inline-block;
-    background-image: linear-gradient(to bottom right, black, rgb(43, 43, 43), black);
+    background-image: linear-gradient(to bottom right, black, rgb(29, 29, 29), black);
     border: 5px solid rgb(14, 14, 14);
     border-style: outset;
     width: 50%;
@@ -679,7 +695,7 @@ textarea,
     padding: 1em;
     margin: 7% 0 0 25%;
     text-align: center;
-    box-shadow: 5px 5px 5px rgb(14, 14, 14);
+    box-shadow: 5px 5px 5px rgb(0, 0, 0);
 }
 
 #BM-profile {
@@ -702,7 +718,7 @@ textarea,
 #BM-data {
     display: inline-block;
     vertical-align: middle;
-    text-align: left;
+    text-align: right;
 }
 
 #BM-data>h2 {
@@ -730,7 +746,7 @@ textarea,
 }
 
 #user-update {
-    padding-bottom: 1.7em;
+    padding-bottom: 2.1em;
 }
 
 .input {
@@ -762,7 +778,6 @@ textarea,
 
 #body-profile {
     margin: .5em 1em 0 1em;
-    padding-bottom: 4.8em;
 }
 
 .percent {
@@ -771,19 +786,121 @@ textarea,
     margin: 1em 0 1em 0;
 }
 
-#perc {
+.perc {
     color: black;
     text-align: center;
     display: inline-block;
-    width: 3em;
+    width: 2.5em;
 }
 
-.gender {
+.gender{
+    text-align: left;
+    margin-left: 23%;
+
+}
+
+.rate {
     text-align: center;
     margin-left: 2.5em;
+}
+
+.gender select option, .rate select option, .activity select option {
+    color: black;
 }
 
 .activity {
     text-align: left;
     margin-left: 7em;
+}
+
+#supportbg {
+    background-image: linear-gradient(to bottom right, black, rgb(29, 29, 29), black);
+}
+
+#support-blurb {
+    display: inline-block;
+    text-align: center;
+    margin: 5% 0 0 17%;
+    width: 60%;
+}
+
+#support-blurb>h1 {
+    margin-bottom: 1em;
+}
+
+#support-contact {
+    display: inline-block;
+    vertical-align: top;
+    margin: 2em 1em 3.95em 8em;
+    padding: 2em 2.5em 0 2.5em;
+    width: 35%;
+    height: auto;
+}
+
+#support-contact p {
+    padding: 1em 1em 2.5em 0;
+}
+
+#support-report {
+    display: inline-block;
+    vertical-align: top;
+    margin: 2em 1em 3.95em 2em;
+    padding: 2em 2.5em 2.9em 2.5em;
+    width: 40%;
+    height: auto;
+}
+
+#support-form form {
+    margin: 1em 0 0 5em;
+    text-align: center;
+}
+
+#issue-cont-btn {
+    margin-top: 1em;
+}
+
+#report-form {
+    margin-top: 10%;
+}
+
+.issue-input {
+    margin: 2.5em 0 0 2em;
+    text-align: left;
+}
+
+.issue-input>select>option {
+    color: black;
+}
+
+#issue-comp, #issue-desc {
+    border: 3px solid gray;
+    border-style: inset;
+    padding: .5em;
+    margin-left: .5em;
+}
+
+.issue-input>label {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10%;
+}
+
+#issue-loc {
+    margin: 0;
+    margin-left: 5.5%;
+    padding: .5em;
+    border: 3px solid gray;
+    border-style: inset;
+}
+#today {
+    color: black;
+    margin-left: 4.5%;
+    padding: .5em;
+    border: 3px solid gray;
+    border-style: inset;
+}
+
+#issue-btn {
+    margin: 5% 0 0 40%;
+    padding: .5em 1em;
 }

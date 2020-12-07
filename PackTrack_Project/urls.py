@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from App_PackTrack.models import User,Pet,Body,User_diary,Pet_diary
+from App_PackTrack.models import User,Pet,Body,User_diary,Pet_diary,Bug
 
 class UserAdmin(admin.ModelAdmin):
     pass
@@ -28,6 +28,10 @@ admin.site.register(Pet,PetAdmin)
 class BodyAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Body,BodyAdmin)
+
+class BugAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Bug,BugAdmin)
 
 class User_diaryAdmin(admin.ModelAdmin):
     pass

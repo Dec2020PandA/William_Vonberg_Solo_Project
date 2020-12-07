@@ -10,7 +10,7 @@ def BMRcalc(weight,height,age,gender):
     return round(bmr)
 
 def CalDay(bmr,act_lvl,rate):
-    calgoal= (bmr*act_lvl)+rate
+    calgoal= (bmr*(act_lvl))+rate
     return round(calgoal)
 
 def RERcalc(weight):

@@ -14,4 +14,6 @@ urlpatterns = [
     path('profile',views.profile),
     path('logout',views.logout),
     path('user_update',views.user_update),
+    path('support',views.support),
+    path('process_issue',views.process_issue),
 ]

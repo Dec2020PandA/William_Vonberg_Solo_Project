@@ -1,11 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pack Support</title>
+    <title>Profile</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'pack_style.css'%}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="{%static 'scripts.js'%}"></script>
 </head>
-<body>
-    <h1>support</h1>
+
+<body id="supportbg">
+    <div class="navbar-main">
+        <img id='logo-main' src="../static/images/PackTrack_Logo.png" alt="logo-main">
+
+        <div id="packtrack-menu">
+            <ul class="navbar-nav">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/summary">Summary</a></li>
+                <li><a href="/support">Support</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div id="spacer">
+                <p><a id="user_active" href="/profile">{{request.session.user_name}}</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="support-blurb">
+        <h1><u>Support</u></h1>
+        <p>We strive to make sure that you have all the tools that we can provide working and fuctional to help you
+            spend less time here, and more time out there! We always hope you never have to report and issue, but if you
+            do, well we hope to resovle it as soon as possible.</p>
+    </div>
+    <div id="support-contact">
+        <h1><u>Contact Us</u></h1>
+        <p>We always love to hear from our guests and our clients! We value your input
+            and your feedback. If you want to let us know about something you'd like to see, or just want to tell us
+            how much you liked what you saw, Feel free to contact us! We hope that you loved what you saw as much as
+            we did designing it for you!</p>
+        <div id="support-form">
+            <form id="comment-form" method="GET">
+                {%csrf_token%}
+                <label for="name">Name </label><br>
+                <input type="text" id="name" name="Name" placeholder="Your Name"><br><br>
+                <label for="email">Email </label><br>
+                <input type="email" id="email" name="email" placeholder="Email address"><br><br>
+                <label for="comment">Comment</label><br>
+                <textarea name="comment" id="comment" cols="50" rows="10">Comments</textarea><br><br>
+                <input class="btn" id="issue-cont-btn"type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+    <div id="support-report">
+        <h1><u>Report an Issue</u></h1>
+        <form action="/process_issue" method="post" id="report-form">
+            {%csrf_token%}
+            <div class="issue-input">
+                <label for="issue-location">What had an Issue?</label>
+                <select id="issue-loc" name="issue_location">
+                    <option value="landing">Landing Page</option>
+                    <option value="summary">Summary Page</option>
+                    <option value="profile">Proflile Page</option>
+                    <option value="support">Support Page</option>
+                    <option value="login">Log In Page</option>
+                    <option value="registration">Registration Page</option>
+                    <option value="other">Other</option>
+                </select><br>
+            </div>
+            <div class="issue-input">
+                <label for="issue-date">When was it noticed</label>
+                <input type="date" id="today" name="issue_date"><br>
+            </div>
+            <div class="issue-input">
+                <label for="component">What component was it?</label>
+                <input type="text" id="issue-comp" name="issue_comp"><br>
+            </div>
+            <div class="issue-input">
+                <label for="issue-description">Describe what happened</label>
+                <textarea name="issue_description" id="issue-desc" cols="50" rows="10"></textarea>
+            </div>
+            <input type="hidden" name="issue_status" value="open">
+            <input type="submit" class="btn" id="issue-btn" value="Submit">
+        </form>
+    </div>
+    <script>
+        let today = new Date().toISOString().substr(0, 10);
+        document.querySelector("#today").value = today;
+    </script>
 </body>
 </html>
