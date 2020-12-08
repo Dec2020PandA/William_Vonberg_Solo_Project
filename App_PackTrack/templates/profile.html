@@ -18,7 +18,6 @@
 
         <div id="packtrack-menu">
             <ul class="navbar-nav">
-                <li><a href="/profile">Profile</a></li>
                 <li><a href="/summary">Summary</a></li>
                 <li><a href="/support">Support</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -28,7 +27,20 @@
             </div>
         </div>
     </div>
+        <div id="pup-section">
+        <div id="side-tabs" class="add-main">
+            <h5><a href="/add_dog">+  Dog</a></h5>
+        </div>
+        {%for dog in dogs%}
+            <div id="side-tabs">
+                <h4><a href="/pet_profile/{{dog.id}}">{{dog.pet_name}}</a></h4>
+            </div>
+        {%endfor%}
+    </div>
     <div id="profile-data">
+        <div id="user-grafitti">
+        {{user.first_name}}
+        </div>
         <div id="BM-profile">
             <span id="BM-title">
                 <h2>BMI:</h2>
@@ -43,7 +55,7 @@
         </div>
         <div class="profile-update">
             <form action="/user_update" method="post">
-                <div id="user-update">
+                <div id="user-update" class="user-update">
                     {%csrf_token%}
                     <div class="input">
                         <label for="f_n">First Name: </label>

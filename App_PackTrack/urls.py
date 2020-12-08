@@ -16,4 +16,6 @@ urlpatterns = [
     path('user_update',views.user_update),
     path('support',views.support),
     path('process_issue',views.process_issue),
+    path('pet_profile/<int:dog_tag>',views.pet_profile),
+    path('add_dog',views.add_dog),
 ]

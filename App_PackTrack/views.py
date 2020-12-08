@@ -29,6 +29,15 @@ def support(request):
         return redirect('/')
     return render(request,"support.html")
 
+def add_dog(request):
+    if "user_id" not in request.session:
+        return redirect('/')
+    context={
+        'dogs': Pet.objects.filter(owner=request.session['user_id']),
+        'add': 1,
+    }
+    return render(request,"pet_profile.html",context)
+
 def summary(request):
     if "user_id" not in request.session:
         return redirect('/')
@@ -47,6 +56,7 @@ def profile(request):
         return redirect('/')
     user_data=Body.objects.get(user=request.session['user_id'])
     context = {
+        'dogs': Pet.objects.filter(owner=request.session['user_id']),
         'user': User.objects.get(id=request.session['user_id']),
         'data': Body.objects.get(user=request.session['user_id']),
         'bmi': BMIcalc(user_data.current_weight,user_data.height),
@@ -54,6 +64,15 @@ def profile(request):
         'cal': CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate),
     }
     return render(request, "profile.html", context)
+
+def pet_profile(request,dog_tag):
+    if "user_id" not in request.session:
+        return redirect('/')
+    context={
+        'pets':Pet.objects.get(id=dog_tag),
+        'dogs': Pet.objects.filter(owner=request.session['user_id']),
+    }
+    return render(request,"pet_profile.html",context)
 
 # page redirects to prevent conifrm submission msg
 
@@ -82,7 +101,7 @@ def user_login(request):
         # compare passwords
         if bcrypt.checkpw(request.POST['p_w'].encode(), logged_user.password.encode()):
             request.session['user_id'] = logged_user.id
-            request.session['user_name'] = f"{logged_user.first_name} {logged_user.last_name}"
+            request.session['user_name'] = f"{logged_user.first_name}"
             dateA = parse_date(str(logged_user.birthday))
             dateB = date.today()
             difference_years = relativedelta(dateB, dateA).years
@@ -121,7 +140,7 @@ def create_user(request):
             password=hash_pw
         )
         request.session['user_id'] = new_user.id
-        request.session['user_name'] = f"{new_user.first_name} {new_user.last_name}"
+        request.session['user_name'] = f"{new_user.first_name}"
         dateA = parse_date(str(request.POST['b_d']))
         dateB = date.today()
         difference_years = relativedelta(dateB, dateA).years
@@ -197,7 +216,7 @@ def user_update(request):
             body_data.protein_percent = request.POST['protein_percent']
             body_data.save()
         request.session['user_id'] = edit_user.id
-        request.session['user_name'] = f"{edit_user.first_name} {edit_user.last_name}"
+        request.session['user_name'] = f"{edit_user.first_name}"
         return redirect("/profile")
     return redirect("/profile")
 

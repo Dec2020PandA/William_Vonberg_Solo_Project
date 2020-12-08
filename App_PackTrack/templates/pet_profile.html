@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'pack_style.css'%}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="{% static 'scripts.js'%}"></script>
+</head>
+
+<body id="profile-body">
+    <div class="navbar-main">
+        <img id='logo-main' src="../static/images/PackTrack_Logo.png" alt="logo-main">
+
+        <div id="packtrack-menu">
+            <ul class="navbar-nav">
+                <li><a href="/summary">Summary</a></li>
+                <li><a href="/support">Support</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div id="spacer">
+                <p><a id="user_active" href="/profile">{{request.session.user_name}}</a></p>
+            </div>
+        </div>
+    </div>
+        <div id="pup-section">
+        <div id="side-tabs" class="add-main">
+            <h5><a id="owner-tab" href="/profile">{{request.session.user_name}}</a></h5>
+        </div>
+        {%for dog in dogs%}
+            <div id="side-tabs">
+                <h4><a href="/pet_profile/{{dog.id}}">{{dog.pet_name}}</a></h4>
+            </div>
+        {%endfor%}
+    </div>
+    <div id="profile-data">
+        <div id="user-grafitti">
+            {{pets.pet_name}}
+        </div>
+        <div id="BM-profile">
+            <span id="BM-title">
+                <h2>RER:</h2>
+                <br><br>
+                <h2>Calories/Day Goal:</h2>
+            </span>
+            <span id="BM-data">
+                <h2>{{rer}}XX</h2>
+               <br><br>
+                <h2>{{pet_cal}}XXXX</h2>
+            </span>
+        </div>
+        <div class="profile-update">
+            <form action="/pet_update" method="post">
+                <div id="user-update" class="pet-update">
+                    {%csrf_token%}
+                    <div class="input">
+                        <label for="pet_name">Name: </label>
+                        <input type="text" name="pet_name" value="{{pets.pet_name}}">
+                    </div>                  
+                    <div class="input">
+                        <label for="pet_bday">Birthday:</label>
+                        <input id="bday" type="date" name="pet_bday" value="{{pets.pet_bday|date:"Y-m-d"}}">
+                    </div>
+                    <div class="input" id="pet-gender">
+                        <label for="pet_gender">Sex:</label>
+                        <select name="pet_gender">
+                            <option value="M"{% if pets.pet_gender == "M"%} selected {%endif%}>Male</option>
+                            <option value="F" {% if pets.pet_gender == "F"%} selected {%endif%}>Female</option>
+                        </select>
+                    </div>
+                    <div class="input" id="pet-intact">                        
+                        <label for="pet_intact" id="intact-no">Intact</label>
+                        <input type="checkbox" name="pet_intact"{% if pets.pet_intact == True %} checked {%endif%}>
+                    </div>
+                </div>
+                <div id="body-profile">
+                    <div class="input">
+                        <label for="pet_weight">Current Weight: </label>
+                        <input type="number" name="pet_weight" value="{{pets.pet_weight}}">
+                    </div>
+                    <div class="input activity">
+                        <label for="pet_bodycond">Body Condition: </label>
+                        <select name="pet_bodycond">
+                            <option value="1" {% if pets_bodycond == "1"%} selected {%endif%}>Twig</option>
+                            <option value="3"{% if pets_bodycond == "3"%} selected {%endif%}>branch</option>
+                            <option value="5"{% if pets_bodycond == "5"%} selected {%endif%}>log</option>
+                            <option value="7"{% if pets_bodycond == "7"%} selected {%endif%}>trunk</option>
+                            <option value="9"{% if pets_bodycond == "9"%} selected {%endif%}>chunky monkey</option>
+                        </select>
+                    </div>
+                    <div class="input activity">
+                        <label for="pet_act_lvl">Activity Level: </label>
+                        <select name="pet_act_lvl">
+                            <option value="1.2" {% if pets.pet_act_lvl == "1.2"%} selected {%endif%}>Zzzzzzzz</option>
+                            <option value="1.375"{% if pets.pet_act_lvl == "1.375"%} selected {%endif%}>couch potato</option>
+                            <option value="1.55"{% if pets.pet_act_lvl == "1.55"%} selected {%endif%}>short walks plz</option>
+                            <option value="1.725"{% if pets.pet_act_lvl == "1.725"%} selected {%endif%}>Squirrel!</option>
+                            <option value="1.9"{% if pets.pet_act_lvl == "1.9"%} selected {%endif%}>Get the Mailman!</option>
+                        </select>
+                    </div>
+                    <div class="input">
+                        <label for="pet_goal">Goal Weight: </label>
+                        <input type="number" name="pet_goal" value="{{pets.pet_goal}}">
+                    </div>
+                    <div class="input rate">
+                        <label for="rate">Goal Rate: </label>
+                        <select name="rate">
+                            <option value="1000"{% if data.rate == "1000"%} selected {%endif%}>Gain fast</option>
+                            <option value="500"{% if data.rate == "500"%} selected {%endif%}>Gain slow</option>
+                            <option value="0" {% if data.rate == "0"%} selected {%endif%}>Maintain Weight</option>
+                            <option value="-500" {% if data.rate == "-500"%} selected {%endif%}>Lose Slow</option>
+                            <option value="-1000" {% if data.rate == "-1000"%} selected {%endif%}>Lose Fast</option>
+                        </select>
+                    </div>
+                    <div class="input percent">
+                        <label for="pet_carb">Carbs</label>
+                        <input class="perc" type="number" name="pet_carb" value="{{pets.pet_carb}}">
+                    </div>
+                    <div class="input percent">
+                        <label for="pet_fat">Fat</label>
+                        <input class="perc" type="number" name="pet_fat" value="{{pets.pet_fat}}">
+                    </div>
+                    <div class="input percent">
+                        <label for="pet_protein">Protein</label>
+                        <input class="perc" type="number" name="pet_protein" value="{{pets.pet_protein}}">
+                    </div>
+                </div>
+                <input class="btn" id="pet-btn" type="submit" value="Submit">
+            </form>
+        </div>
+        {%if messages%}
+        <ul>
+            {%for error in messages%}
+            <li>{{error}}</li>
+            {%endfor%}
+        </ul>
+        {%endif%}
+    </div>
+</body>
+
+</html>
