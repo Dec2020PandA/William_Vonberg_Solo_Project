@@ -57,39 +57,39 @@
             <form action="/user_update" method="post">
                 <div id="user-update" class="user-update">
                     {%csrf_token%}
-                    <div class="input">
+                    <div class="input user-prof" id="user-fn">
                         <label for="f_n">First Name: </label>
                         <input type="text" name="f_n" value="{{user.first_name}}">
                     </div>
-                    <div class="input">
+                    <div class="input user-prof" id="user-ln">
                         <label for="l_n">Last Name: </label>
                         <input type="text" name="l_n" value="{{user.last_name}}">
                     </div>
-                    <div class="input">
-                        <label for="b_d">Birthday:</label>
+                    <div class="input user-prof">
+                        <label id="user-bd" for="b_d">Birthday:</label>
                         <input id="b_d" type="date" name="b_d" value="{{user.birthday|date:"Y-m-d"}}">
                     </div>
-                    <div class="input">
-                        <label for="email">Email: </label>
-                        <input id="e_m" type="email" name="email" value="{{user.email}}">
+                    <div class="input user-prof">
+                        <label id="e_m" for="email">Email: </label>
+                        <input type="email" name="email" value="{{user.email}}">
                         <input type="hidden" name="conf_email" value="{{user.email}}">
                     </div>
-                    <div class="input">
+                    <div class="input user-prof" id="user-pwd" >
                         <label for="old_pw">Current Password: </label>
                         <input type="password" name="old_pw" placeholder="Needed if changing pswd">
                     </div>
-                    <div class="input">
+                    <div class="input user-prof" id="user-chg">
                         <label for="pw">Change Password: </label>
                         <input type="password" name="pw" placeholder="leave blank if no change">
                     </div>
-                    <div class="input">
+                    <div class="input user-prof" id="user-conf">
                         <label for="conf_pw">Confirm Pswd: </label>
                         <input type="password" name="conf_pw" placeholder="confirm pswd to change">
                         <input type="hidden" name="pwd_ver" value="{{user.password}}">
                     </div>
                 </div>
                 <div id="body-profile">
-                    <div class="input">
+                    <div class="input" id="user-wt">
                         <label for="current_weight">Current Weight: </label>
                         <input type="number" name="current_weight" value="{{data.current_weight}}">
                     </div>
@@ -97,9 +97,9 @@
                         <label for="height">Height (in inches): </label>
                         <input type="number" name="height" value="{{data.height}}">
                     </div>
-                    <div class="input gender">
+                    <div class="input gender" id="user-gen">
                         <label for="gender">Biological Sex:</label>
-                        <select name="gender">
+                        <select name="gender" >
                             <option value="M"{% if data.gender == "M"%} selected {%endif%}>Male</option>
                             <option value="F" {% if data.gender == "F"%} selected {%endif%}>Female</option>
                         </select>
@@ -107,38 +107,40 @@
                     <div class="input activity">
                         <label for="activity_lvl">Activity Level: </label>
                         <select name="activity_lvl">
-                            <option value="1.2" {% if data.activity_lvl == "1.2"%} selected {%endif%}>Sedentary</option>
-                            <option value="1.375"{% if data.activity_lvl == "1.375"%} selected {%endif%}>Lightly Active</option>
-                            <option value="1.55"{% if data.activity_lvl == "1.55"%} selected {%endif%}>Moderately Active</option>
-                            <option value="1.725"{% if data.activity_lvl == "1.725"%} selected {%endif%}>Very Active</option>
-                            <option value="1.9"{% if data.activity_lvl == "1.9"%} selected {%endif%}>Extra Active</option>
+                            <option value="1.2" {% if data.activity_lvl == 1.2%} selected {%endif%}>Sedentary</option>
+                            <option value="1.375"{% if data.activity_lvl == 1.375%} selected {%endif%}>Lightly Active</option>
+                            <option value="1.55"{% if data.activity_lvl == 1.55%} selected {%endif%}>Moderately Active</option>
+                            <option value="1.725"{% if data.activity_lvl == 1.725%} selected {%endif%}>Very Active</option>
+                            <option value="1.9"{% if data.activity_lvl == 1.9%} selected {%endif%}>Extra Active</option>
                         </select>
                     </div>
-                    <div class="input">
+                    <div class="input" id="user-gl">
                         <label for="goal">Goal Weight: </label>
                         <input type="number" name="goal" value="{{data.goal}}">
                     </div>
-                    <div class="input rate">
+                    <div class="input rate" id="user-rt">
                         <label for="rate">Goal Rate: </label>
                         <select name="rate">
-                            <option value="1000"{% if data.rate == "1000"%} selected {%endif%}>Gain 2 lb/week</option>
-                            <option value="500"{% if data.rate == "500"%} selected {%endif%}>Gain 1 lb/week</option>
-                            <option value="0" {% if data.rate == "0"%} selected {%endif%}>Maintain weight</option>
-                            <option value="-500" {% if data.rate == "-500"%} selected {%endif%}>Lose 1 lb/week</option>
-                            <option value="-1000" {% if data.rate == "-1000"%} selected {%endif%}>Lose 2 lb/week</option>
+                            <option value="1000"{% if data.rate == 1000%} selected {%endif%}>Gain 2 lb/week</option>
+                            <option value="500"{% if data.rate == 500 %} selected {%endif%}>Gain 1 lb/week</option>
+                            <option value="0" {% if data.rate == 0 %} selected {%endif%}>Maintain weight</option>
+                            <option value="-500" {% if data.rate == -500 %} selected {%endif%}>Lose 1 lb/week</option>
+                            <option value="-1000" {% if data.rate == -1000 %} selected {%endif%}>Lose 2 lb/week</option>
                         </select>
                     </div>
-                    <div class="input percent">
-                        <label for="carb_percent">Carbs</label>
-                        <input class="perc" type="number" name="carb_percent" value="{{data.carb_percent}}">
-                    </div>
-                    <div class="input percent">
-                        <label for="fat_percent">Fat</label>
-                        <input class="perc" type="number" name="fat_percent" value="{{data.fat_percent}}">
-                    </div>
-                    <div class="input percent">
-                        <label for="protein_percent">Protein</label>
-                        <input class="perc" type="number" name="protein_percent" value="{{data.protein_percent}}">
+                    <div class="perc-info">
+                        <div class="input percent">
+                            <label for="carb_percent">Carbs</label>
+                            <input class="perc" type="number" name="carb_percent" value="{{data.carb_percent}}">
+                        </div>
+                        <div class="input percent">
+                            <label for="fat_percent">Fat</label>
+                            <input class="perc" type="number" name="fat_percent" value="{{data.fat_percent}}">
+                        </div>
+                        <div class="input percent">
+                            <label for="protein_percent">Protein</label>
+                            <input class="perc" type="number" name="protein_percent" value="{{data.protein_percent}}">
+                        </div>
                     </div>
                 </div>
                 <input class="btn" id="submit-btn" type="submit" value="Submit Changes">

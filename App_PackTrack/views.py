@@ -34,7 +34,7 @@ def add_dog(request):
         return redirect('/')
     context={
         'dogs': Pet.objects.filter(owner=request.session['user_id']),
-        'add': 1,
+        'validate':1
     }
     return render(request,"pet_profile.html",context)
 
@@ -47,6 +47,7 @@ def summary(request):
         'data': Body.objects.get(user=request.session['user_id']),
         'bmi': BMIcalc(user_data.current_weight,user_data.height),
         'bmr': BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),
+        'cal': CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate),
     }
     return render(request, "summary.html", context)
 
@@ -62,15 +63,20 @@ def profile(request):
         'bmi': BMIcalc(user_data.current_weight,user_data.height),
         'bmr': BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),
         'cal': CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate),
+        
     }
     return render(request, "profile.html", context)
 
 def pet_profile(request,dog_tag):
     if "user_id" not in request.session:
         return redirect('/')
+    pet_data=Pet.objects.get(id=dog_tag)
     context={
+        'rer': RERcalc(pet_data.pet_weight),
+        'mer':CalDayDog(RERcalc(pet_data.pet_weight),pet_data.pet_gender,pet_data.pet_act_lvl,pet_data.pet_rate),
         'pets':Pet.objects.get(id=dog_tag),
         'dogs': Pet.objects.filter(owner=request.session['user_id']),
+        'exists': dog_tag,
     }
     return render(request,"pet_profile.html",context)
 
@@ -147,11 +153,12 @@ def create_user(request):
         request.session['user_age']=difference_years
         body_data = Body.objects.create(
             user=User.objects.get(id=request.session['user_id']),
-            current_weight=0,
-            height=0,
+            current_weight=1,
+            height=1,
             gender="X",
-            activity_lvl=0,
-            goal=0,
+            activity_lvl=1.2,
+            goal=1,
+            rate=0,
             carb_percent=45,
             fat_percent=25,
             protein_percent=30,
@@ -220,6 +227,69 @@ def user_update(request):
         return redirect("/profile")
     return redirect("/profile")
 
+# per profile update and add
+
+def pet_update(request,dog_id):
+    if request.method=="POST":
+        if dog_id==0:
+            new_dog=Pet.objects.create(
+                owner=User.objects.get(id=request.session['user_id']),
+                pet_name=request.POST['pet_name'],
+                pet_bday=request.POST['pet_bday'],
+                pet_bodycond=request.POST['pet_bodycond'],
+                pet_weight=request.POST['pet_weight'],
+                pet_act_lvl=request.POST['pet_act_lvl'],
+                pet_gender=request.POST['pet_gender'],
+                pet_goal=request.POST['pet_goal'],
+                pet_carb=request.POST['pet_carb'],
+                pet_fat=request.POST['pet_fat'],
+                pet_protein=request.POST['pet_protein'],
+                pet_rate=request.POST['pet_rate'],
+            )
+            return redirect(f"/pet_profile/{new_dog.id}")
+        else:
+            dog_info=Pet.objects.get(id=dog_id)
+            if dog_info.pet_name != request.POST['pet_name']:
+                dog_info.pet_name = request.POST['pet_name']
+                dog_info.save()
+            if dog_info.pet_bday != request.POST['pet_bday']:
+                dog_info.pet_bday = request.POST['pet_bday']
+                dog_info.save()
+            if dog_info.pet_bodycond != request.POST['pet_bodycond']:
+                dog_info.pet_bodycond = request.POST['pet_bodycond']
+                dog_info.save()
+            if dog_info.pet_weight != request.POST['pet_weight']:
+                dog_info.pet_weight = request.POST['pet_weight']
+                dog_info.save()  
+            if dog_info.pet_act_lvl != request.POST['pet_act_lvl']:
+                dog_info.pet_act_lvl = request.POST['pet_act_lvl']
+                dog_info.save()
+            if dog_info.pet_gender != request.POST['pet_gender']:
+                dog_info.pet_gender = request.POST['pet_gender']
+                dog_info.save()
+            if dog_info.pet_goal != request.POST['pet_goal']:
+                dog_info.pet_goal = request.POST['pet_goal']
+                dog_info.save()
+            if dog_info.pet_carb != request.POST['pet_carb']:
+                dog_info.pet_carb = request.POST['pet_carb']
+                dog_info.save()
+            if dog_info.pet_fat != request.POST['pet_fat']:
+                dog_info.pet_fat = request.POST['pet_fat']
+                dog_info.save()
+            if dog_info.pet_protein != request.POST['pet_protein']:
+                dog_info.pet_protein = request.POST['pet_protein']
+                dog_info.save()
+            if dog_info.pet_rate != request.POST['pet_rate']:
+                dog_info.pet_rate = request.POST['pet_rate']
+                dog_info.save()
+        return redirect(f"/pet_profile/{dog_id}")        
+    return redirect("/profile")
+
+# delete pet profile
+
+def delete(request,dog_tag):
+    Pet.objects.get(id=dog_tag).delete()
+    return redirect("/profile")
 
 #process bug reports
 
@@ -235,6 +305,30 @@ def process_issue(request):
         )
         return redirect("/support")
     return redirect("/support")
+
+#process comments ( will change to outside source later)
+def support_comment(request):
+    if request.method=="POST":
+        new_comment=Comment.objects.create(
+            poster=User.objects.get(id=request.session['user_id']),
+            name=request.POST['name'],
+            email=request.POST['email'],
+            message=request.POST['comment']
+        )
+        return redirect("/support")
+    return redirect("/")
+
+def landing_comment(request):
+    if request.method=="POST":
+        new_comment=Comment.objects.create(
+            poster=User.objects.get(id=request.session['user_id']),
+            name=request.POST['name'],
+            email=request.POST['email'],
+            message=request.POST['comment']
+        )
+        return redirect("/landing")
+    return redirect("/")
+
 
 def logout(request):
     request.session.flush()

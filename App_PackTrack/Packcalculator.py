@@ -17,5 +17,9 @@ def RERcalc(weight):
     rer=70*((weight*0.453592)**.75)
     return round(rer)
 
-def CalDayDog():
-    pass
+def CalDayDog(rer,sex,act_lvl,rate):
+    if sex=="IM" or "IF":
+        mer=rer*1.8*act_lvl*rate
+    else:
+        mer=rer*1.8*act_lvl*rate
+    return round(mer)

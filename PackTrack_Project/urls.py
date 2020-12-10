@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from App_PackTrack.models import User,Pet,Body,User_diary,Pet_diary,Bug
+from App_PackTrack.models import User,Pet,Body,User_diary,Pet_diary,Bug,Comment
 
 class UserAdmin(admin.ModelAdmin):
     pass
@@ -40,6 +40,10 @@ admin.site.register(User_diary,User_diaryAdmin)
 class Pet_diaryAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Pet_diary,Pet_diaryAdmin)
+
+class CommentAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Comment,CommentAdmin)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

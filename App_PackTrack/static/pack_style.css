@@ -346,7 +346,7 @@ h1 {
     display: inline-block;
 }
 
-.btn{
+.btn {
     background-color: green;
     color: ivory;
     font-family: 'Segoe UI';
@@ -359,7 +359,7 @@ h1 {
     padding: .3em 1.5em;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: #784321;
     color: ivory;
 }
@@ -372,6 +372,20 @@ h1 {
 #pet-btn {
     margin-top: 3em;
     margin-left: 0;
+}
+
+#delete-btn {
+    margin-top: 3em;
+    background-color: red;
+}
+
+#delete-btn:hover {
+    background-image: linear-gradient(to top left, red, yellow);
+}
+
+#delete-link {
+    color: white;
+    text-decoration: none;
 }
 
 #info-section {
@@ -752,25 +766,76 @@ textarea,
     height: 80%;
 }
 
-.pet-update {
-   padding: 0 0 12.9em 0;
+
+#pet-profile-img {
+    display: block;
+    width: 50%;
+    margin-left: 0;
+    margin-right: 25em;
+    transform: rotate(-25deg);
 }
 
-#pet-update {
-    padding-bottom: 35em;
+.pet-update {
+    padding-bottom: 2em;
+}
+
+#pet-body {
+    padding-bottom: 2.3em;
 }
 
 .user-update {
-    padding-bottom: 2em;
+    padding-bottom: 1em;
+}
+
+#user-update {
+    text-align: right;
+}
+
+#user-fn, #user-ln {
+    margin-left: 4em;
+
+}
+
+#user-bd {
+    margin-left: 1.6em;
+}
+
+#e_m {
+    margin-left: 3em;
+}
+
+#user-pwd, #user-chg {
+   margin-right: 2.3em; 
+}
+
+#user-conf {
+    margin-right: 1em;
+}
+
+#user-wt {
+    margin-left: 1.7em;
+}
+
+#user-gen {
+    margin-left: 3.1em;
+}
+
+#user-gl {
+    margin-left: 3.5em;
+}
+
+#user-rt {
+    margin-left: 4.5em;
 }
 
 .input {
     display: inline-block;
-    text-align: right;
+    text-align: left;
     width: 90%;
 }
 
-.input input,select {
+.input input,
+select {
     color: black;
     background-color: rgb(224, 224, 224);
     border: 3px solid gray;
@@ -780,21 +845,47 @@ textarea,
     margin: 1.5em 0 1.5em 0;
     padding: .5em;
 }
+
 .input label {
     color: rgb(175, 174, 174);
     display: inline-block;
     padding: 1em;
 }
+
 #b_d {
     margin-left: 3em;
 }
 
 #bday {
-    margin-right: 3em;
+    margin-left: 5.3em;
 }
 
-#e_m {
-    margin-left: .5em;
+#pet-body {
+    text-align: left;
+}
+
+#pet-name {
+    margin-left: 6.7em;
+}
+
+#pet-weight {
+    margin-left: 3.9em;
+}
+
+#pet-bodycond {
+    margin-left: 3.9em;
+}
+
+#pet-act {
+    margin-left: 2.3em;
+}
+
+#pet-goal {
+    margin-left: 5.1em;
+}
+
+#pet-rate {
+    margin-left: 6.1em;
 }
 
 #body-profile {
@@ -804,39 +895,39 @@ textarea,
 .percent {
     display: inline-block;
     width: auto;
-    margin: 1em 0 1em 0;
+    margin: 0 .7em 1em 0;
 }
 
 .perc {
     color: black;
-    text-align: center;
     display: inline-block;
+    text-align: center;
     width: 2.5em;
 }
 
-.gender{
+.gender {
     text-align: left;
-    margin-left: 23%;
-
 }
 
-.rate {
-    text-align: center;
-    margin-left: 2.5em;
-}
-
-.gender select option, .rate select option, .activity select option {
+.gender select option,
+.rate select option,
+.activity select option {
     color: black;
 }
 
 .activity {
     text-align: left;
-    margin-left: 7em;
+    margin-left: 3em;
 }
 
 #pet-gender {
+    display: inline-block;
     text-align: left;
-    margin-left: 11.5em;
+    margin-left: 7.6em;
+}
+
+#pet-gender>select>option {
+    color: black;
 }
 
 #pet-intact {
@@ -844,12 +935,11 @@ textarea,
     margin-left: 11em;
 }
 
-#intact-no {
+#intact {
     text-align: left;
 }
 
-
-#pup-section{
+#pup-section {
     display: inline-block;
     vertical-align: top;
     margin-top: 7.5%;
@@ -874,7 +964,7 @@ textarea,
     border-right: 2px solid rgb(39, 39, 39);
     border-bottom: 1px solid black;
     border-style: outset;
-    border-radius: 10px 10px 0 0 ;
+    border-radius: 10px 10px 0 0;
 }
 
 #user-grafitti {
@@ -906,7 +996,7 @@ textarea,
 
 #owner-tab {
     font-family: "Rock Salt";
-    color:  rgb(110, 194, 121);
+    color: rgb(110, 194, 121);
     text-shadow: 1px 1px 2px green;
     opacity: .8;
     text-decoration: none;
@@ -972,7 +1062,8 @@ textarea,
     color: black;
 }
 
-#issue-comp, #issue-desc {
+#issue-comp,
+#issue-desc {
     border: 3px solid gray;
     border-style: inset;
     padding: .5em;
@@ -992,6 +1083,7 @@ textarea,
     border: 3px solid gray;
     border-style: inset;
 }
+
 #today {
     color: black;
     margin-left: 4.5%;
@@ -1003,4 +1095,97 @@ textarea,
 #issue-btn {
     margin: 5% 0 0 40%;
     padding: .5em 1em;
+}
+
+#summary-body {
+    height: 969px;
+    background-image: linear-gradient(to bottom right, rgb(20, 20, 20), rgb(0, 0, 0), rgb(20, 20, 20));
+}
+#sum-spacer {
+    border: 1px dotted green;
+    padding: 8em 0 0 5em;
+}
+
+#sum-main {
+    border: 1px solid yellow;
+    height: auto;
+}
+
+#sum-second {
+    border: 1px solid red;
+}
+
+#profile-pics {
+    border: 1px solid blue;
+    vertical-align: top;
+    display: inline-block;
+    height: 400px;
+    width: 15%;
+}
+
+#move-back,#move-forward {
+    display: inline-block;
+    border: 1px solid purple;
+    vertical-align: top;
+    width: 4%;
+    height: 400px;
+}
+
+#arrow-l {
+    float: left;
+    margin-top: 2.4em;
+    font-size: 400%;
+    text-decoration: none;
+}
+
+#arrow-r {
+    float: right;
+    margin-top: 2.4em;
+    font-size: 400%;
+    text-decoration: none;
+}
+
+#move-forward>p {
+    display: inline-block;
+}
+
+#move-back>p {
+    padding-left: 1.5em;
+}
+
+#move-back>p, #move-forward>p {
+    margin: 7em 0 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+}
+
+#data-bars {
+    display: inline-block;
+    height: 400px;
+    width: 70%;
+    border: 1px solid orange;
+}
+
+#gage-pic {
+    border: 10px solid rgb(37, 37, 37);
+    border-style: inset;
+    width: 50%;
+    margin: 2em 0 2em 4em;
+    height: 8em;
+}
+
+#male-pic,#female-pic,#pet-pic {
+    width: 100%;
+    height: 100%;
+}
+
+#user-gages, #pet-gages{
+    background-image: linear-gradient(to bottom right, rgb(20, 20, 20), rgb(0, 0, 0), rgb(20, 20, 20));
+    border: 10px solid rgb(37, 37, 37);
+    margin: 2em 0 2em 1.5em;
+    border-style: inset;
+    width: 95%;
+    height: 8em;
 }

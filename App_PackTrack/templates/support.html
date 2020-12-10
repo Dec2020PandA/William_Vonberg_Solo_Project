@@ -42,14 +42,14 @@
             how much you liked what you saw, Feel free to contact us! We hope that you loved what you saw as much as
             we did designing it for you!</p>
         <div id="support-form">
-            <form id="comment-form" method="GET">
+            <form action="/support_comment" id="comment-form" method="post">
                 {%csrf_token%}
                 <label for="name">Name </label><br>
-                <input type="text" id="name" name="Name" placeholder="Your Name"><br><br>
+                <input type="text" id="name" name="name" placeholder="Your Name"><br><br>
                 <label for="email">Email </label><br>
                 <input type="email" id="email" name="email" placeholder="Email address"><br><br>
-                <label for="comment">Comment</label><br>
-                <textarea name="comment" id="comment" cols="50" rows="10">Comments</textarea><br><br>
+                <label for="comment">Comments</label><br>
+                <textarea name="comment" id="comment" cols="50" rows="10"></textarea><br><br>
                 <input class="btn" id="issue-cont-btn"type="submit" value="Submit">
             </form>
         </div>

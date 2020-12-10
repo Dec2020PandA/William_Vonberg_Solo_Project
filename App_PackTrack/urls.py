@@ -18,4 +18,8 @@ urlpatterns = [
     path('process_issue',views.process_issue),
     path('pet_profile/<int:dog_tag>',views.pet_profile),
     path('add_dog',views.add_dog),
+    path('pet_update/<int:dog_id>',views.pet_update),
+    path('delete/<int:dog_tag>',views.delete),
+    path('support_comment',views.support_comment),
+    path('landing_comment',views.landing_comment),
 ]

@@ -1,26 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pack Summary</title>
+    <title>Summary</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'pack_style.css'%}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="{% static 'scripts.js'%}"></script>
 </head>
-<body>
-    <h1>{{request.session.user_name}} ! success!</h1>
 
-    <h1>{{user.first_name}}</h1>
-    {{user.first_name}} <br>
-    {{user.last_name}} <br>
-    {{user.email}} <br>
-    {{user.birthday}} <br><br>
-    {{data.user.first_name}} <br>
-    {{data.height}} <br>
-    {{data.gender}} <br>
-    {{data.activity}} <br>
-    {{data.goal}} <br>
-    {{data.carb_percent}} % <br>
-    {{data.fat_percent}} % <br>
-    {{data.protein_percent}} % <br>
-    {{data.updated_at}} <br>
+<body id='summary-body'>
+    <div class="navbar-main">
+        <img id='logo-main' src="../static/images/PackTrack_Logo.png" alt="logo-main">
+
+        <div id="packtrack-menu">
+            <ul class="navbar-nav">
+                <li><a href="/summary">Summary</a></li>
+                <li><a href="/support">Support</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div id="spacer">
+                <p><a id="user_active" href="/profile">{{request.session.user_name}}</a></p>
+            </div>
+        </div>
+    </div>
+    <div id="sum-spacer">
+
+    </div>
+    <div id="sum-main">
+        <div id="profile-pics">
+
+            <div id="gage-pic">
+                {% if data.gender == "M" %}
+                <img id="male-pic" src="../static/images/user_male.png" alt="male-profile-pic">
+                {% else %}
+                <img id="female-pic" src="../static/images/user_female.png" alt="female-profile-pic">
+                {%endif%}
+            </div>
+            <div id="gage-pic">
+                <img id="pet-pic" src="../static/images/pet_pic.png" alt="pet-profile-pic">
+            </div>
+        </div>
+        <div id="move-back">
+            <a id="arrow-l" href="">«</a>
+            <p>10/10/2020</p>
+        </div>
+        <div id="data-bars">
+            <div id="user-gages">
+
+            </div>
+            <div id="pet-gages">
+
+            </div>
+        </div>
+        <div id="move-forward">
+            <p>10/10/2020</p>
+            <a id="arrow-r" href="">»</a>
+        </div>
+    </div>
 </body>
+
 </html>

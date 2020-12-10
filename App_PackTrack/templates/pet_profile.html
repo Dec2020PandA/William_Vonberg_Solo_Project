@@ -27,20 +27,26 @@
             </div>
         </div>
     </div>
-        <div id="pup-section">
+    <div id="pup-section">
         <div id="side-tabs" class="add-main">
             <h5><a id="owner-tab" href="/profile">{{request.session.user_name}}</a></h5>
         </div>
         {%for dog in dogs%}
-            <div id="side-tabs">
-                <h4><a href="/pet_profile/{{dog.id}}">{{dog.pet_name}}</a></h4>
-            </div>
+        <div id="side-tabs">
+            <h4><a href="/pet_profile/{{dog.id}}">{{dog.pet_name}}</a></h4>
+        </div>
         {%endfor%}
     </div>
     <div id="profile-data">
+        {% if validate %}
+        <div id="user-grafitti">
+            Add Dog
+        </div>
+        {%else%}
         <div id="user-grafitti">
             {{pets.pet_name}}
         </div>
+        {%endif%}
         <div id="BM-profile">
             <span id="BM-title">
                 <h2>RER:</h2>
@@ -48,89 +54,112 @@
                 <h2>Calories/Day Goal:</h2>
             </span>
             <span id="BM-data">
-                <h2>{{rer}}XX</h2>
-               <br><br>
-                <h2>{{pet_cal}}XXXX</h2>
+                {%if validate%}
+                    <h2>XX</h2>
+                {%else%}
+                    <h2>{{rer}}</h2>
+                {%endif%}
+                <br><br>
+                {%if validate%}
+                    <h2>XXXX</h2>
+                {%else%}
+                    <h2>{{mer}}</h2>
+                {%endif%}
             </span>
         </div>
         <div class="profile-update">
-            <form action="/pet_update" method="post">
-                <div id="user-update" class="pet-update">
-                    {%csrf_token%}
-                    <div class="input">
-                        <label for="pet_name">Name: </label>
-                        <input type="text" name="pet_name" value="{{pets.pet_name}}">
-                    </div>                  
-                    <div class="input">
-                        <label for="pet_bday">Birthday:</label>
-                        <input id="bday" type="date" name="pet_bday" value="{{pets.pet_bday|date:"Y-m-d"}}">
+
+            {% if validate%}
+            <form action="/pet_update/0" method="post">
+                {%else%}
+                <form action="/pet_update/{{pets.id}}" method="post">
+                    {%endif%}
+                    <div id="user-update" class="pet-update">
+                        {%csrf_token%}
+                        <div class="input" id="pet-name">
+                            <label for="pet_name">Name: </label>
+                            <input type="text" name="pet_name" {%if validate%} placeholder="unknown" {%endif%} value="{{pets.pet_name}}">
+                        </div>
+                        <input type="hidden" name="validate" value="{{validate}}">
+                        <div class="input" id="bday">
+                            <label for="pet_bday">Birthday:</label>
+                            <input type="date" name="pet_bday" {%if validate%} value="1901-01-01" {%endif%} value="{{pets.pet_bday|date:'Y-m-d'}}">
+                        </div>
+                        <div class="input" id="pet-gender">
+                            <label for="pet_gender">Sex:</label>
+                            <select name="pet_gender">
+                                <option value="IM" {% if pets.pet_gender == "IM"%} selected {%endif%}>Intact Male
+                                </option>
+                                <option value="IF" {% if pets.pet_gender == "IF"%} selected {%endif%}>Intact Female
+                                </option>
+                                <option value="NM" {% if pets.pet_gender == "NM"%} selected {%endif%}>Neutered Male
+                                </option>
+                                <option value="SF" {% if pets.pet_gender == "SF"%} selected {%endif%}>Spayed Female
+                                </option>
+                            </select>
+                            <img id="pet-profile-img"src="../static/images/pawprint.jpg" alt="pawprint">
+                        </div>
                     </div>
-                    <div class="input" id="pet-gender">
-                        <label for="pet_gender">Sex:</label>
-                        <select name="pet_gender">
-                            <option value="M"{% if pets.pet_gender == "M"%} selected {%endif%}>Male</option>
-                            <option value="F" {% if pets.pet_gender == "F"%} selected {%endif%}>Female</option>
-                        </select>
+                    <div id="body-profile">
+                        <div id="pet-body">
+                            <div class="input" id="pet-weight" >
+                                <label for="pet_weight">Current Weight: </label>
+                                <input type="number" name="pet_weight" {%if validate%} value="0" {%endif%} value="{{pets.pet_weight}}">
+                            </div>
+                            <div class="input activity" id="pet-bodycond">
+                                <label  for="pet_bodycond">Body Condition: </label>
+                                <select name="pet_bodycond">
+                                    <option value="1" {% if pets.pet_bodycond == 1 %} selected {%endif%}>Very Thin</option>
+                                    <option value="3" {% if pets.pet_bodycond == 3 %} selected {%endif%}>Underweight</option>
+                                    <option value="5" {% if pets.pet_bodycond == 5 %} selected {%endif%}>Ideal</option>
+                                    <option value="7" {% if pets.pet_bodycond == 7 %} selected {%endif%}>Overweight</option>
+                                    <option value="9" {% if pets.pet_bodycond == 9 %} selected {%endif%}>Obese</option>
+                                </select>
+                            </div>
+                            <div class="input activity" id="pet-act" >
+                                <label id="pet-act" for="pet_act_lvl">Activity Level: </label>
+                                <select name="pet_act_lvl">
+                                    <option value="1" {% if pets.pet_act_lvl == 1 %} selected {%endif%}>Inactive
+                                    </option>
+                                    <option value="1.2" {% if pets.pet_act_lvl ==  1.2 %} selected {%endif%}>Somewhat Active</option>
+                                    <option value="1.4" {% if pets.pet_act_lvl ==  1.4 %} selected {%endif%}>Active</option>
+                                    <option value="1.6" {% if pets.pet_act_lvl == 1.6 %} selected {%endif%}>Very Active</option>
+                                </select>
+                            </div>
+                            <div class="input" id="pet-goal">
+                                <label for="pet_goal">Goal Weight: </label>
+                                <input type="number" name="pet_goal" {%if validate%} value="0" {%endif%} value="{{pets.pet_goal}}">
+                            </div>
+                            <div class="input rate" id="pet-rate">
+                                <label for="pet_rate">Goal Rate: </label>
+                                <select name="pet_rate">
+                                    <option value="1.2" {% if pets.pet_rate == 1.2 %} selected {%endif%}>Gain</option>
+                                    <option value="1" {% if pets.pet_rate == 1 %} selected {%endif%}>Maintain</option>
+                                    <option value=".8" {% if pets.pet_rate == .8 %} selected {%endif%}>Lose</option>
+                                </select>
+                        </div>
+                        </div>
+                        <div class="perc-info">
+                            <div class="input percent">
+                                <label for="pet_carb">Carbs</label>
+                                <input class="perc" type="number" name="pet_carb" {%if validate%} value="60" {%endif%}
+                                    value="{{pets.pet_carb}}">
+                            </div>
+                            <div class="input percent">
+                                <label for="pet_fat">Fat</label>
+                                <input class="perc" type="number" name="pet_fat" {%if validate%} value="15" {%endif%} value="{{pets.pet_fat}}">
+                            </div>
+                            <div class="input percent">
+                                <label for="pet_protein">Protein</label>
+                                <input class="perc" type="number" name="pet_protein" {%if validate%} value="25" {%endif%} value="{{pets.pet_protein}}">
+                            </div>
+                        </div>
                     </div>
-                    <div class="input" id="pet-intact">                        
-                        <label for="pet_intact" id="intact-no">Intact</label>
-                        <input type="checkbox" name="pet_intact"{% if pets.pet_intact == True %} checked {%endif%}>
-                    </div>
-                </div>
-                <div id="body-profile">
-                    <div class="input">
-                        <label for="pet_weight">Current Weight: </label>
-                        <input type="number" name="pet_weight" value="{{pets.pet_weight}}">
-                    </div>
-                    <div class="input activity">
-                        <label for="pet_bodycond">Body Condition: </label>
-                        <select name="pet_bodycond">
-                            <option value="1" {% if pets_bodycond == "1"%} selected {%endif%}>Twig</option>
-                            <option value="3"{% if pets_bodycond == "3"%} selected {%endif%}>branch</option>
-                            <option value="5"{% if pets_bodycond == "5"%} selected {%endif%}>log</option>
-                            <option value="7"{% if pets_bodycond == "7"%} selected {%endif%}>trunk</option>
-                            <option value="9"{% if pets_bodycond == "9"%} selected {%endif%}>chunky monkey</option>
-                        </select>
-                    </div>
-                    <div class="input activity">
-                        <label for="pet_act_lvl">Activity Level: </label>
-                        <select name="pet_act_lvl">
-                            <option value="1.2" {% if pets.pet_act_lvl == "1.2"%} selected {%endif%}>Zzzzzzzz</option>
-                            <option value="1.375"{% if pets.pet_act_lvl == "1.375"%} selected {%endif%}>couch potato</option>
-                            <option value="1.55"{% if pets.pet_act_lvl == "1.55"%} selected {%endif%}>short walks plz</option>
-                            <option value="1.725"{% if pets.pet_act_lvl == "1.725"%} selected {%endif%}>Squirrel!</option>
-                            <option value="1.9"{% if pets.pet_act_lvl == "1.9"%} selected {%endif%}>Get the Mailman!</option>
-                        </select>
-                    </div>
-                    <div class="input">
-                        <label for="pet_goal">Goal Weight: </label>
-                        <input type="number" name="pet_goal" value="{{pets.pet_goal}}">
-                    </div>
-                    <div class="input rate">
-                        <label for="rate">Goal Rate: </label>
-                        <select name="rate">
-                            <option value="1000"{% if data.rate == "1000"%} selected {%endif%}>Gain fast</option>
-                            <option value="500"{% if data.rate == "500"%} selected {%endif%}>Gain slow</option>
-                            <option value="0" {% if data.rate == "0"%} selected {%endif%}>Maintain Weight</option>
-                            <option value="-500" {% if data.rate == "-500"%} selected {%endif%}>Lose Slow</option>
-                            <option value="-1000" {% if data.rate == "-1000"%} selected {%endif%}>Lose Fast</option>
-                        </select>
-                    </div>
-                    <div class="input percent">
-                        <label for="pet_carb">Carbs</label>
-                        <input class="perc" type="number" name="pet_carb" value="{{pets.pet_carb}}">
-                    </div>
-                    <div class="input percent">
-                        <label for="pet_fat">Fat</label>
-                        <input class="perc" type="number" name="pet_fat" value="{{pets.pet_fat}}">
-                    </div>
-                    <div class="input percent">
-                        <label for="pet_protein">Protein</label>
-                        <input class="perc" type="number" name="pet_protein" value="{{pets.pet_protein}}">
-                    </div>
-                </div>
-                <input class="btn" id="pet-btn" type="submit" value="Submit">
-            </form>
+                    <input class="btn" id="pet-btn" type="submit" value="Submit">
+                    {%if not validate%}
+                        <button class="btn" id="delete-btn"><a id="delete-link"href="/delete/{{pets.id}}">Delete</button>
+                    {%endif%}
+                </form>
         </div>
         {%if messages%}
         <ul>
