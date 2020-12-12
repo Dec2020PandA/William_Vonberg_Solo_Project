@@ -20,6 +20,7 @@ h1 {
     background-image: linear-gradient(black, rgb(41, 41, 41), black);
     overflow: hidden;
     padding-top: .5em;
+    padding-bottom: .5em;
     position: fixed;
     width: 100%;
     z-index: 3;
@@ -1014,6 +1015,10 @@ select {
     width: 60%;
 }
 
+#support-blurb p, #support-contact p {
+    color: rgb(207, 207, 207);
+}
+
 #support-blurb>h1 {
     margin-bottom: 1em;
 }
@@ -1038,6 +1043,10 @@ select {
     padding: 2em 2.5em 2.9em 2.5em;
     width: 40%;
     height: auto;
+}
+
+#support-report label {
+    color: white;
 }
 
 #support-form form {
@@ -1102,21 +1111,17 @@ select {
     background-image: linear-gradient(to bottom right, rgb(20, 20, 20), rgb(0, 0, 0), rgb(20, 20, 20));
 }
 #sum-spacer {
-    border: 1px dotted green;
-    padding: 8em 0 0 5em;
+    /* border: 1px dotted green; */
+    padding: 4em 0 0 5em;
 }
 
 #sum-main {
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     height: auto;
 }
 
-#sum-second {
-    border: 1px solid red;
-}
-
 #profile-pics {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     vertical-align: top;
     display: inline-block;
     height: 400px;
@@ -1125,22 +1130,29 @@ select {
 
 #move-back,#move-forward {
     display: inline-block;
-    border: 1px solid purple;
+    /* border: 1px solid purple; */
     vertical-align: top;
     width: 4%;
-    height: 400px;
+    height: 350px;
 }
 
 #arrow-l {
+    border: 6px solid rgb(36, 36, 36);
+    border-style: outset;
     float: left;
-    margin-top: 2.4em;
+    margin-top: 2.2em;
+    padding: 0 .2em .2em .2em;
     font-size: 400%;
     text-decoration: none;
 }
 
 #arrow-r {
     float: right;
-    margin-top: 2.4em;
+    border: 6px solid rgb(36, 36, 36);
+    border-style: outset;
+    vertical-align: middle;
+    margin-top: 2.2em;
+    padding: 0 .2em .2em .2em;
     font-size: 400%;
     text-decoration: none;
 }
@@ -1165,7 +1177,14 @@ select {
     display: inline-block;
     height: 400px;
     width: 70%;
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
+}
+
+#data-bars h2 {
+    float:right;
+    color: rgb(204, 204, 204);
+    margin-right: 45%;
+    margin-top: .3%;
 }
 
 #gage-pic {
@@ -1176,16 +1195,186 @@ select {
     height: 8em;
 }
 
+#gage-pic h3 {
+    margin: .5em 0 0 2em;
+}
+
 #male-pic,#female-pic,#pet-pic {
     width: 100%;
     height: 100%;
 }
 
+#pet-pic {
+    margin-bottom: 1em;
+}
+
+#pet-picker {
+    color:rgb(110, 194, 121);
+    font-family: 'Segoe UI';
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    margin-left: 1.7em;
+    margin-top: -.2em;
+}
+
+#pet-picker option {
+    color: rgb(110, 194, 121);
+    border: none;
+    font-family: 'Segoe UI';
+    background-color: black;
+    font-size: 18px;
+
+}
+
+#picker-add {
+    font-family: 'Segoe UI';
+    text-decoration: none;
+    margin-left: 1.6em;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 #user-gages, #pet-gages{
     background-image: linear-gradient(to bottom right, rgb(20, 20, 20), rgb(0, 0, 0), rgb(20, 20, 20));
     border: 10px solid rgb(37, 37, 37);
+    font-family: 'Segoe UI';
     margin: 2em 0 2em 1.5em;
     border-style: inset;
     width: 95%;
     height: 8em;
 }
+#gage1, #gage2 {
+    margin-left: 3em;
+}
+
+.gages, .pgages {
+    display: inline-block;
+    vertical-align: top;
+    text-align: right;
+    border: 8px solid rgb(46, 46, 46);
+    border-style: outset;
+    width: 15%;
+    height: 87%;
+    margin: 0 1em;
+}
+
+.gages h5, .pgages h5 {
+    color: rgb(155, 155, 155);
+    display: inline-block;
+    margin: 0 .5em .5em 0 ;
+    font-size: 14px;
+}
+
+.gages h4, .pgages h4 {
+    text-align: center;
+    font-size: 18px;
+}
+
+.gages p, .pgages p {
+    color: rgb(231, 231, 231);
+    text-align: center;
+    margin-top: .1em;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+.gage-current, .gage-goal {
+    display: inline-block;
+    vertical-align: bottom;
+    border: 5px solid rgb(48, 48, 48);
+    border-style: inset;
+    margin: 1em 0 0 0;
+    width: 50%;
+    height: 18%;
+}
+
+.gage-current {
+    margin-top: .5em;
+}
+
+#entries {
+    margin: 0 auto;
+    /* border: 1px solid gray; */
+    height: 19.5em;
+}
+
+.diary {
+    display: inline-block;
+    text-align: center;
+    border:6px solid rgb(36, 36, 36);
+    border-style: inset;
+    margin: 1em;
+    width: 45%;
+    height: 92%;
+}
+
+#user-entry {
+    margin-left: 4.5em;
+    vertical-align: top;
+}
+
+#pet-entry {
+    vertical-align: top;
+}
+
+#diary-list {
+    margin: 0 auto;
+    /* border: 1px solid purple; */
+    height: 11em;
+}
+
+.list {
+    display: inline-block;
+    text-align: center;
+    border:6px solid rgb(49, 49, 49);
+    border-style: inset;
+    margin: .5em 1em;
+    width: 45%;
+    height: 90%;
+}
+
+#user-list {
+    margin-left: 4.5em;
+}
+
+#user-diary-food, #user-diary-activity {
+    display: inline-block;
+    vertical-align: top;
+    border: 5px solid rgb(37, 37, 37);
+    border-style: outset;
+    margin-top: .25em;
+    margin-bottom: -.5em;
+    width: 45%;
+    height: 12em;
+}
+
+#user-diary-food {
+    margin-right: 1em;
+}
+
+.d-input {
+    text-align: right;
+    padding-top: .5em;
+    margin-right: 3em;
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.d-input input {
+    color: black;
+    background-color: rgb(224, 224, 224);
+    border: 4px solid rgb(87, 86, 86);
+    border-style: inset;
+}
+
+.d-input label {
+    color: rgb(155, 155, 155);
+}
+
+#da-input {
+    margin-top: 2.5em;
+}
+

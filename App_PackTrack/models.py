@@ -113,6 +113,7 @@ class Pet_diary(models.Model):
     pet_protein= models.IntegerField()
     pet_activity= models.CharField(max_length=48)
     pet_calburned=models.IntegerField()
+    pet_food=models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

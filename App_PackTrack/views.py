@@ -42,7 +42,9 @@ def summary(request):
     if "user_id" not in request.session:
         return redirect('/')
     user_data=Body.objects.get(user=request.session['user_id'])
+    pet_data=Pet.objects.filter(owner=request.session['user_id'])
     context = {
+        'dogs': pet_data,
         'user': User.objects.get(id=request.session['user_id']),
         'data': Body.objects.get(user=request.session['user_id']),
         'bmi': BMIcalc(user_data.current_weight,user_data.height),
@@ -50,7 +52,6 @@ def summary(request):
         'cal': CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate),
     }
     return render(request, "summary.html", context)
-
 
 def profile(request):
     if "user_id" not in request.session:

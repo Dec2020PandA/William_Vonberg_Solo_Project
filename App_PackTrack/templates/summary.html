@@ -32,35 +32,240 @@
     </div>
     <div id="sum-main">
         <div id="profile-pics">
-
             <div id="gage-pic">
                 {% if data.gender == "M" %}
                 <img id="male-pic" src="../static/images/user_male.png" alt="male-profile-pic">
                 {% else %}
                 <img id="female-pic" src="../static/images/user_female.png" alt="female-profile-pic">
                 {%endif%}
+                <h3>{{user.first_name}}</h3>
             </div>
             <div id="gage-pic">
                 <img id="pet-pic" src="../static/images/pet_pic.png" alt="pet-profile-pic">
+                {%if dogs%}
+                    <select name="pet-picker" id="pet-picker" onchange="">
+                            {%for dog in dogs%}
+                                <option value="{{dog.id}}">{{dog.pet_name}}</option>
+                            {%endfor%}
+                    </select>
+                {%else%}
+                    <a id="picker-add" href="/add_dog">Add a Dog</a>          
+                {%endif%}
             </div>
         </div>
         <div id="move-back">
             <a id="arrow-l" href="">«</a>
-            <p>10/10/2020</p>
         </div>
         <div id="data-bars">
+            <h2>10/10/2020</h2>
             <div id="user-gages">
-
+                <div class="gages" id="gage1">
+                    <h4>Calories</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>{{cal}}</p>
+                    </div>
+                </div>
+                <div class="gages">
+                    <h4>Fat</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="gages">
+                    <h4>Carbohydrates</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="gages">
+                    <h4>Protein</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="gages">
+                    <h4>% of Goal</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
             </div>
             <div id="pet-gages">
-
+                <div class="pgages" id="gage2">
+                    <h4>Calories</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="pgages">
+                    <h4>Fat</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="pgages">
+                    <h4>Carbohydrates</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="pgages">
+                    <h4>Protein</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
+                <div class="pgages">
+                    <h4>% of Goal</h4>
+                    <h5>Current:</h5>
+                    <div class="gage-current">
+                        <p>XXXX</p>
+                    </div>
+                    <h5>Goal:</h5>
+                    <div class="gage-goal">
+                        <p>XXXX</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="move-forward">
-            <p>10/10/2020</p>
             <a id="arrow-r" href="">»</a>
         </div>
     </div>
+    <div id="entries">
+        <div class="diary" id="user-entry">
+            <h2>{{request.session.user_name}}'s Entry</h2>
+            <form id="user-diary-form" action="" method="post">
+                {%csrf_token%}
+                <div id="user-diary-food">
+                    <div class="d-input">
+                        <label for="food_item">Food Item:</label>
+                        <input name="food_item" type="text" placeholder="What did you eat?"><br>
+                    </div>
+                    <div class="d-input">
+                        <label for="calories">Calories:</label>
+                        <input name="calories" type="number" value=0><br>
+                    </div>
+                    <div class="d-input">
+                        <label for="fat">Fat:</label>
+                        <input name="fat" type="number" value=0><br>
+                    </div>
+                    <div class="d-input">
+                        <label for="carbs">Carbs</label>
+                        <input name="carbs" type="number" value=0><br>
+                    </div>
+                    <div class="d-input">
+                        <label for="protein">Protein</label>
+                        <input name="protein" type="number" value=0>
+                    </div>
+                </div>
+                <div id="user-diary-activity">
+                    <div class="d-input" id="da-input">
+                        <label for="activity">Activity:</label>
+                        <input name="activity" type="text" placeholder="What did you do?"><br>
+                    </div>
+                    <div class="d-input">
+                        <label for="calories_burned">Calories Burned:</label>
+                        <input name="calories_burned" type="number" value=0><br>
+                    </div>
+                </div>
+                <input class="btn" id="submit-btn" type="submit" value="Submit Entry">
+            </form>
+        </div>
+        <div class="diary" id="pet-entry">
+                <h2>{{dog.name}}Doggo's Entry</h2>
+                <form id="dog-diary-form" action="" method="post">
+                    {%csrf_token%}
+                    <div id="user-diary-food">
+                        <div class="d-input">
+                            <label for="pet_food">Pet's Food Item:</label>
+                            <input name="pet_food" type="text" placeholder="What did fido eat?"><br>
+                        </div>
+                        <div class="d-input">
+                            <label for="pet_cals">Calories:</label>
+                            <input name="pet_cals" type="number" value=0><br>
+                        </div>
+                        <div class="d-input">
+                            <label for="pet_fat">Fat:</label>
+                            <input name="pet_fat" type="number" value=0><br>
+                        </div>
+                        <div class="d-input">
+                            <label for="pet_carbs">Carbs</label>
+                            <input name="pet_carbs" type="number" value=0><br>
+                        </div>
+                        <div class="d-input">
+                            <label for="pet_protein">Protein</label>
+                            <input name="pet_protein" type="number" value=0>
+                        </div>
+                    </div>
+                    <div id="user-diary-activity">
+                        <div class="d-input" id="da-input">
+                            <label for="pet_activity">Activity:</label>
+                            <input name="pet_activity" type="text" placeholder="What did fido do?"><br>
+                        </div>
+                        <div class="d-input">
+                            <label for="calories_burned">Calories Burned:</label>
+                            <input name="calories_burned" type="number" value=0><br>
+                        </div>
+                    </div>
+                    <input class="btn" id="submit-btn" type="submit" value="Submit Entry">
+                </form>
+        </div>
+    </div>
+    <div id="diary-list">
+        <div class="list" id="user-list">
+            <p>human data</p>
+        </div>
+        <div class="list" id="pet-list">
+            <p>pet data</p>
+        </div>
+    </div>
+
 </body>
 
 </html>
