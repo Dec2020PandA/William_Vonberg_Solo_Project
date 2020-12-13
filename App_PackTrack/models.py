@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date,datetime
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse as parse_date
+from .Packcalculator import *
 import re
 
 ## Validators
@@ -79,6 +80,26 @@ class Pet(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def rer(self):
+        return RERcalc(self.pet_weight)
+
+    @property
+    def mer(self):
+        return CalDayDog(RERcalc(self.pet_weight),self.pet_gender,self.pet_act_lvl,self.pet_rate)
+
+    @property
+    def petFat(self):
+        return round((CalDayDog(RERcalc(self.pet_weight),self.pet_gender,self.pet_act_lvl,self.pet_rate))*(self.pet_fat/100)/9)
+
+    @property
+    def petCarb(self):
+        return round((CalDayDog(RERcalc(self.pet_weight),self.pet_gender,self.pet_act_lvl,self.pet_rate))*(self.pet_carb/100)/4)
+
+    @property
+    def petProt(self):
+        return round((CalDayDog(RERcalc(self.pet_weight),self.pet_gender,self.pet_act_lvl,self.pet_rate))*(self.pet_protein/100)/4)    
+
 class Body(models.Model):
     user=models.ForeignKey(User, related_name='bodies',on_delete=models.CASCADE)
     current_weight=models.IntegerField()
@@ -116,6 +137,7 @@ class Pet_diary(models.Model):
     pet_food=models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class Bug(models.Model):
     user=models.ForeignKey(User,related_name="user_bugs", on_delete=models.CASCADE)

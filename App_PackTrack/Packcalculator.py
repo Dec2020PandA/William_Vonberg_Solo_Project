@@ -23,3 +23,4 @@ def CalDayDog(rer,sex,act_lvl,rate):
     else:
         mer=rer*1.8*act_lvl*rate
     return round(mer)
+

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse as parse_date
+from datetime import date,datetime
 from .models import *
 from django.contrib import messages
 from .Packcalculator import *
@@ -42,14 +43,21 @@ def summary(request):
     if "user_id" not in request.session:
         return redirect('/')
     user_data=Body.objects.get(user=request.session['user_id'])
-    pet_data=Pet.objects.filter(owner=request.session['user_id'])
+    pet_stuff=Pet.objects.filter(owner=request.session['user_id'])
+    datetime=date.today()
+
+    calories= CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate)
     context = {
-        'dogs': pet_data,
+        'diary_date':datetime,
+        'fat_goal': round(calories*(user_data.fat_percent/100)/9),
+        'carb_goal':round(calories*(user_data.carb_percent/100)/4),
+        'prot_goal':round(calories*(user_data.protein_percent/100)/4),
+        'dogs': pet_stuff,
         'user': User.objects.get(id=request.session['user_id']),
         'data': Body.objects.get(user=request.session['user_id']),
         'bmi': BMIcalc(user_data.current_weight,user_data.height),
         'bmr': BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),
-        'cal': CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate),
+        'cal': calories,
     }
     return render(request, "summary.html", context)
 

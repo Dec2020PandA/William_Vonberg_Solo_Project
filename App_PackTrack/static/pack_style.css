@@ -1208,7 +1208,7 @@ select {
     margin-bottom: 1em;
 }
 
-#pet-picker {
+#dog_selector {
     color:rgb(110, 194, 121);
     font-family: 'Segoe UI';
     background-color: transparent;
@@ -1218,7 +1218,7 @@ select {
     margin-top: -.2em;
 }
 
-#pet-picker option {
+#dog_selector option {
     color: rgb(110, 194, 121);
     border: none;
     font-family: 'Segoe UI';
@@ -1227,7 +1227,7 @@ select {
 
 }
 
-#picker-add {
+#selector-add {
     font-family: 'Segoe UI';
     text-decoration: none;
     margin-left: 1.6em;
@@ -1298,6 +1298,10 @@ select {
     margin: 0 auto;
     /* border: 1px solid gray; */
     height: 19.5em;
+}
+
+#pet-gages span {
+   color: rgb(231, 231, 231);
 }
 
 .diary {
