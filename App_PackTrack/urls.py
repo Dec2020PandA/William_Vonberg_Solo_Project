@@ -22,4 +22,6 @@ urlpatterns = [
     path('delete/<int:dog_tag>',views.delete),
     path('support_comment',views.support_comment),
     path('landing_comment',views.landing_comment),
+    path('user_entry',views.user_entry),
+    path('pet_entry',views.pet_entry),
 ]

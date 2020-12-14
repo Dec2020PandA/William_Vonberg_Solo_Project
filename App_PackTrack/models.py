@@ -64,6 +64,26 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects= UserManager()
 
+    def total_cals_day(self, _date = None):
+        if _date == None: _date = date.today()
+        entries = self.users_diaries.filter(user_entry =_date)
+        return sum((entry.calories for entry in entries))-sum((entry.calories_burned for entry in entries))
+
+    def total_fat_day(self, _date = None):
+        if _date == None: _date = date.today()
+        entries = self.users_diaries.filter(user_entry =_date)
+        return sum((entry.fat for entry in entries))
+    
+    def total_carbs_day(self, _date = None):
+        if _date == None: _date = date.today()
+        entries = self.users_diaries.filter(user_entry =_date)
+        return sum((entry.carbs for entry in entries))
+
+    def total_protein_day(self, _date = None):
+        if _date == None: _date = date.today()
+        entries = self.users_diaries.filter(user_entry =_date)
+        return sum((entry.protein for entry in entries))
+
 class Pet(models.Model):
     owner=models.ForeignKey(User, related_name='pet_owner',on_delete=models.CASCADE)
     pet_name= models.CharField(default="Spot",max_length=255)
@@ -79,6 +99,27 @@ class Pet(models.Model):
     pet_rate=models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    def total_petcals_day(self, _date = None):
+        if _date == None: _date = date.today()
+        pet_entries = self.pets_diaries.filter(pet_entry =_date)
+        return sum((pet_entry.pet_cals for pet_entry in pet_entries))-sum((pet_entry.pet_calburned for pet_entry in pet_entries))
+
+    def total_petfat_day(self, _date = None):
+        if _date == None: _date = date.today()
+        pet_entries = self.pets_diaries.filter(pet_entry =_date)
+        return sum((pet_entry.pet_fat for pet_entry in pet_entries))
+
+    def total_petcarb_day(self, _date = None):
+        if _date == None: _date = date.today()
+        pet_entries = self.pets_diaries.filter(pet_entry =_date)
+        return sum((pet_entry.pet_carbs for pet_entry in pet_entries))
+
+    def total_petprot_day(self, _date = None):
+        if _date == None: _date = date.today()
+        pet_entries = self.pets_diaries.filter(pet_entry =_date)
+        return sum((pet_entry.pet_protein for pet_entry in pet_entries))
 
     @property
     def rer(self):
@@ -116,6 +157,7 @@ class Body(models.Model):
 
 class User_diary(models.Model):
     user=models.ForeignKey(User, related_name='users_diaries',on_delete=models.CASCADE)
+    user_entry=models.DateField(blank=False, default=datetime.now)
     calories=models.IntegerField()
     fat=models.IntegerField()
     carbs=models.IntegerField()
@@ -125,9 +167,12 @@ class User_diary(models.Model):
     food_item=models.CharField(max_length=48)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+        
 
 class Pet_diary(models.Model):
     pet=models.ForeignKey(Pet, related_name='pets_diaries',on_delete=models.CASCADE)
+    owner=models.ForeignKey(User,related_name = "pet_owners", on_delete = models.CASCADE)
+    pet_entry=models.DateField(blank=False, default=datetime.now)
     pet_cals=models.IntegerField()
     pet_fat=models.IntegerField()
     pet_carbs=models.IntegerField()
@@ -137,7 +182,6 @@ class Pet_diary(models.Model):
     pet_food=models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 class Bug(models.Model):
     user=models.ForeignKey(User,related_name="user_bugs", on_delete=models.CASCADE)
@@ -150,7 +194,6 @@ class Bug(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Comment(models.Model):
-    poster=models.ForeignKey(User,related_name='comments',on_delete=models.CASCADE)
     name=models.CharField(max_length=255)
     email=models.EmailField()
     message=models.TextField()

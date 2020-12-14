@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse as parse_date
-from datetime import date,datetime
+from datetime import date, datetime as dt
 from .models import *
 from django.contrib import messages
 from .Packcalculator import *
@@ -44,14 +44,18 @@ def summary(request):
         return redirect('/')
     user_data=Body.objects.get(user=request.session['user_id'])
     pet_stuff=Pet.objects.filter(owner=request.session['user_id'])
-    datetime=date.today()
+    datetime=dt.now().date()
+    utc = dt.utcnow().date()
 
     calories= CalDay(BMRcalc(user_data.current_weight,user_data.height,request.session['user_age'],user_data.gender),user_data.activity_lvl,user_data.rate)
     context = {
-        'diary_date':datetime,
+        'user_entries': User_diary.objects.filter(user=request.session["user_id"]),
+        'pet_entries': { pet.id:pet.pets_diaries.filter(pet_entry=datetime) for pet in pet_stuff },
+        'diary_date':utc,
+        'other_date':datetime,
         'fat_goal': round(calories*(user_data.fat_percent/100)/9),
-        'carb_goal':round(calories*(user_data.carb_percent/100)/4),
-        'prot_goal':round(calories*(user_data.protein_percent/100)/4),
+        'carb_goal': round(calories*(user_data.carb_percent/100)/4),
+        'prot_goal': round(calories*(user_data.protein_percent/100)/4),
         'dogs': pet_stuff,
         'user': User.objects.get(id=request.session['user_id']),
         'data': Body.objects.get(user=request.session['user_id']),
@@ -319,7 +323,6 @@ def process_issue(request):
 def support_comment(request):
     if request.method=="POST":
         new_comment=Comment.objects.create(
-            poster=User.objects.get(id=request.session['user_id']),
             name=request.POST['name'],
             email=request.POST['email'],
             message=request.POST['comment']
@@ -330,7 +333,6 @@ def support_comment(request):
 def landing_comment(request):
     if request.method=="POST":
         new_comment=Comment.objects.create(
-            poster=User.objects.get(id=request.session['user_id']),
             name=request.POST['name'],
             email=request.POST['email'],
             message=request.POST['comment']
@@ -338,6 +340,42 @@ def landing_comment(request):
         return redirect("/landing")
     return redirect("/")
 
+# process user diary entries to the db based on user id and date
+
+def user_entry(request):
+    if request.method=="POST":
+        new_entry=User_diary.objects.create(
+            user=User.objects.get(id=request.session['user_id']),
+            user_entry=request.POST['user_entry'],
+            calories=request.POST['calories'],
+            fat=request.POST['fat'],
+            carbs=request.POST['carbs'],
+            protein= request.POST['protein'],
+            activity=request.POST['activity'],
+            calories_burned=request.POST['calories_burned'],
+            food_item=request.POST['food_item'],
+        )
+        return redirect("/summary")
+    return redirect('/summary')
+
+# process pet diary entries based on pet id from name selected under pet picture and by date
+
+def pet_entry(request):
+    if request.method=="POST":
+        new_petEntry=Pet_diary.objects.create(
+            pet=Pet.objects.get(id=request.POST['pet_id']),
+            pet_entry=request.POST['pet_entry'],
+            pet_cals=request.POST['pet_cals'],
+            pet_fat=request.POST['pet_fat'],
+            pet_carbs=request.POST['pet_carbs'],
+            pet_protein=request.POST['pet_protein'],
+            pet_activity=request.POST['pet_activity'],
+            pet_calburned=request.POST['petcal_burned'],
+            pet_food=request.POST['pet_food'],
+            owner=User.objects.get(id=request.session["user_id"]),
+        )
+        return redirect("/summary")
+    return redirect('/summary')
 
 def logout(request):
     request.session.flush()

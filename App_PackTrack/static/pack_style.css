@@ -1340,7 +1340,28 @@ select {
 }
 
 #user-list {
+    vertical-align: top;
     margin-left: 4.5em;
+    overflow: auto;
+}
+
+#food-entry {
+    text-align: center;
+    list-style-type: none;
+}
+
+#activity-entry {
+    text-align: center;
+    color: crimson;
+    list-style-type: none;
+}
+
+#pet-list {
+    vertical-align: top;
+}
+
+#pet-list p {
+    color: crimson;
 }
 
 #user-diary-food, #user-diary-activity {

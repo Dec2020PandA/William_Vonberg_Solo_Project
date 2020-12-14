@@ -1,3 +1,4 @@
+{% load exectools %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,13 +59,13 @@
             <a id="arrow-l" href="">«</a>
         </div>
         <div id="data-bars">
-            <h2>{{diary_date|date:"m-d-Y"}}</h2>
+            <h2 id='date'></h2>
             <div id="user-gages">
                 <div class="gages" id="gage1">
                     <h4>Calories</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p>{% exec user "total_cals_day" other_date %}</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -75,7 +76,7 @@
                     <h4>Fat</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p>{% exec user "total_fat_day" other_date %} g</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -86,7 +87,7 @@
                     <h4>Carbs</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p>{% exec user "total_carbs_day" other_date %} g</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -97,7 +98,7 @@
                     <h4>Protein</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p>{% exec user "total_protein_day" other_date %} g</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -122,7 +123,7 @@
                     <h4>Calories</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p><span id="dog_attr_petcalday"></span></p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -133,7 +134,7 @@
                     <h4>Fat</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p><span id="dog_attr_petfatday"></span> g</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -144,7 +145,7 @@
                     <h4>Carbs</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p><span id="dog_attr_petcarbday"></span> g</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -155,7 +156,7 @@
                     <h4>Protein</h4>
                     <h5>Current:</h5>
                     <div class="gage-current">
-                        <p>XXXX</p>
+                        <p><span id="dog_attr_petprotday"></span> g</p>
                     </div>
                     <h5>Goal:</h5>
                     <div class="gage-goal">
@@ -183,7 +184,7 @@
     <div id="entries">
         <div class="diary" id="user-entry">
             <h2>{{request.session.user_name}}'s Entry</h2>
-            <form id="user-diary-form" action="" method="post">
+            <form id="user-diary-form" action="/user_entry" method="post">
                 {%csrf_token%}
                 <div id="user-diary-food">
                     <div class="d-input">
@@ -216,6 +217,10 @@
                         <label for="calories_burned">Calories Burned:</label>
                         <input name="calories_burned" type="number" value=0><br>
                     </div>
+                    <div class="d-input">
+                        <label for="user_entry">When ?</label>
+                        <input type="date" class="d-today" name="user_entry" value='2020-10-10'><br>
+                    </div>
                 </div>
                 <input class="btn" id="submit-btn" type="submit" value="Submit Entry">
             </form>
@@ -227,13 +232,14 @@
                 <h2><a href="/add_dog">Add a Dog</a></h2>
             {% endif %}
             {% if dogs %}
-            <form id="dog-diary-form" action="" method="post">
+            <form id="dog-diary-form" action="/pet_entry" method="post">
                 {%csrf_token%}
                 <div id="user-diary-food">
                     <div class="d-input">
                         <label for="pet_food">Pet's Food Item:</label>
                         <input name="pet_food" type="text" placeholder="What did fido eat?"><br>
                     </div>
+                    <input type="hidden" name="pet_id" id="dog_attr_pet_id">
                     <div class="d-input">
                         <label for="pet_cals">Calories:</label>
                         <input name="pet_cals" type="number" value=0><br>
@@ -257,8 +263,12 @@
                         <input name="pet_activity" type="text" placeholder="What did fido do?"><br>
                     </div>
                     <div class="d-input">
-                        <label for="calories_burned">Calories Burned:</label>
-                        <input name="calories_burned" type="number" value=0><br>
+                        <label for="petcal_burned">Calories Burned:</label>
+                        <input name="petcal_burned" type="number" value=0><br>
+                    </div>
+                    <div class="d-input">
+                        <label for="pet_entry">When ?</label>
+                        <input type="date" class="d-today" name="pet_entry" value='2020-10-10'><br>
                     </div>
                 </div>
                 <input class="btn" id="submit-btn" type="submit" value="Submit Entry">
@@ -268,13 +278,32 @@
     </div>
     <div id="diary-list">
         <div class="list" id="user-list">
-            <p>human data</p>
+            {%if user_entries%}
+                {% for entry in user_entries%}
+                    {% if entry.user_entry == other_date %}
+                        <ul>
+                            {% if entry.food_item %}
+                            <li id="food-entry">🍲 {{request.session.user_name}} had {{entry.food_item}} containing {{entry.calories}} calories, {{entry.fat}} grams of fat,and {{entry.carbs}} grams of carbs, and {{entry.protein}} grams of protein.</li>
+                            {% endif %}
+                            {% if entry.calories_burned %}
+                                <li id="activity-entry"> 💪 {{request.session.user_name}}'s activity: {{entry.activity}} burned {{entry.calories_burned}} calories!</li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {%endif%}
         </div>
         <div class="list" id="pet-list">
-            <p>pet data</p>
+
         </div>
     </div>
     <script>
+        let django_date = "{{ diary_date|date:"c" }}"
+        let js_date = new Date(django_date);
+        let today = js_date.toLocaleDateString();
+        $(".today").val(today);
+
+        document.getElementById("date").innerHTML = today;
         // This is the blob you want to dynamically generate in your template
         dog_data = {
             {% for dog in dogs %}
@@ -286,16 +315,59 @@
                     'pet_carb': '{{dog.petCarb}}',
                     'pet_prot': '{{dog.petProt}}',
                     'pet_weight': '{{dog.pet_weight}}',
+                    'pet_id': '{{dog.id}}',
+                    'petcalday': '{% exec dog "total_petcals_day" other_date %}',
+                    'petfatday': '{% exec dog "total_petfat_day" other_date %}',
+                    'petcarbday': '{% exec dog "total_petcarb_day" other_date %}',
+                    'petprotday': '{% exec dog "total_petprot_day" other_date %}',
+                    
 
                 }{% if not forloop.last %},{% endif %} // this prevents extra commas that sometimes cause syntax errors
+                {% endfor %}
+            }
+            
+        dog_entries = {
+            {% for dog_id, entries in pet_entries.items %}
+                '{{dog_id}}': [
+                    {% for entry in entries %}{
+                    'peteventdate': '{{entry.pet_entry}}',
+                    'petname': '{{entry.pet.pet_name}}',
+                    'petfood': '{{entry.pet_food}}',
+                    'petcalevent': '{{entry.pet_cals}}',
+                    'petfatevent': '{{entry.pet_fat}}',
+                    'petcarbevent': '{{entry.pet_carbs}}',
+                    'petprotevent': '{{entry.pet_protein}}',
+                    'petactevent': '{{entry.pet_activity}}',
+                    'petburnevent': '{{entry.pet_calburned}}',
+                    'has_food_item': {{ entry.pet_food|boolify }},
+                    "has_activity": {{ entry.pet_activity|boolify }},
+                    }{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]{% if not forloop.last %},{% endif %}
             {% endfor %}
         }
+
+
 
         function handle_dog_selector() {
             dog_id = $("#dog_selector option:selected").attr('value') // Get selected dog id
             my_data = dog_data[dog_id] // Get the data from the dog data object
+            pet_id = $("input#dog_attr_pet_id").val(my_data['pet_id'])
             for (const [key, value] of Object.entries(my_data)) { // Loop over the dog data key-values
-                $("#dog_attr_"+key).text(value) // Populate any spans whose IDs match the key
+            $("#dog_attr_"+key).text(value) // Populate any spans whose IDs match the key
+            }
+            
+            $("#pet-list").empty()
+            for (let entry of dog_entries[dog_id]) {
+                console.log(entry)
+                row = $("<p></p>")
+                if (entry['has_food_item']) {
+                    row.append($("<span> 🍲 "+entry['petname']+" had "+entry['petfood']+" containing "+entry['petcalevent']+" calories, "+entry['petfatevent']+" grams of fat, "+entry['petcarbevent']+" grams of carbs, and "+entry['petprotevent']+" grams of protein </span><br>" ))
+                }
+                if (entry['has_activity']) {
+                    row.append("<p>💪 "+entry['petname']+"'s activity: "+entry['petactevent']+" burned "+entry['petburnevent']+" calories!</p>")
+                }
+                $("#pet-list").append(row)
             }
         }
 
