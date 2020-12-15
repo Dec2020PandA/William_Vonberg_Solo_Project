@@ -1,7 +1,7 @@
 * {
     margin: 0 auto;
     width: auto;
-    color: rgb(110, 194, 121)
+    color: rgb(216, 216, 216);
 }
 
 html {
@@ -9,7 +9,7 @@ html {
 }
 
 h1 {
-    color: #784321
+    color: rgb(110, 194, 121)
 }
 
 .content {
@@ -1034,6 +1034,10 @@ select {
 
 #support-contact p {
     padding: 1em 1em 2.5em 0;
+}
+
+#support-blurb h1 u, #support-contact h1 u , #support-report h1 u {
+    color: rgb(110, 194, 121);
 }
 
 #support-report {
